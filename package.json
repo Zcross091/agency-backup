@@ -1,0 +1,13 @@
+{
+  "name": "northlane-agency",
+  "version": "1.0.0",
+  "description": "Northlane Advertising Agency - Performance Marketing & Analytics Infrastructure",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.15"
+  }
+}

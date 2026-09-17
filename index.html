@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Northlane | Performance Marketing & Customer Acquisition Agency</title>
+  <meta name="description" content="Northlane brings paying customers directly to your local business or bakery through hyper-targeted Meta ads and automated email retention funnels.">
+  <!-- Browser Tab Favicon & Brand Icons -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Glow & Grid Orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <div class="logo-symbol">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 19V5L14 19V5" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="19" cy="5" r="2.5" fill="#FFD3AC" />
+            <defs>
+              <linearGradient id="logo-grad" x1="4" y1="5" x2="19" y2="19" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFD3AC"/>
+                <stop offset="1" stop-color="#E5A975"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="brand-name">NORTHLANE<span class="brand-dot">.</span></span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#services">What We Do</a>
+        <a href="#case-study">Client Results</a>
+        <a href="#process">How It Works</a>
+        <a href="#revenue-calculator">Revenue Potential</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-secondary-nav" id="openAuditBtnNav">Growth Audit</button>
+        <button class="btn btn-primary" id="openContactBtnNav">
+          <span>Talk with Us</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#services" class="mobile-link">What We Do</a>
+      <a href="#case-study" class="mobile-link">Client Results</a>
+      <a href="#process" class="mobile-link">How It Works</a>
+      <a href="#revenue-calculator" class="mobile-link">Revenue Potential</a>
+      <div class="mobile-btn-group">
+        <button class="btn btn-primary full-width" id="openContactBtnMobile">Connect with Leadership</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+          <span class="badge-text">FULL-SERVICE CUSTOMER ACQUISITION</span>
+        </div>
+
+        <h1 class="hero-title">
+          We bring paying customers <span class="gradient-text">directly to your business</span>.
+        </h1>
+
+        <p class="hero-subtext">
+          Northlane manages your Meta advertising and automated customer retention funnels from A to Z — so your tables, shelves, and order queues stay full every single week.
+        </p>
+
+        <div class="hero-metrics-strip">
+          <div class="metric-pill">
+            <div class="metric-icon">🎯</div>
+            <div class="metric-info">
+              <span class="metric-val">Hyper-Local Radius</span>
+              <span class="metric-label">Targeting buyers within 5km–10km of your door</span>
+            </div>
+          </div>
+          <div class="metric-pill">
+            <div class="metric-icon">📈</div>
+            <div class="metric-info">
+              <span class="metric-val">4.2x Average ROAS</span>
+              <span class="metric-label">Optimized for real sales, not vanity clicks</span>
+            </div>
+          </div>
+          <div class="metric-pill">
+            <div class="metric-icon">⚡</div>
+            <div class="metric-info">
+              <span class="metric-val">100% Done-For-You</span>
+              <span class="metric-label">Creative, copywriting, ads & weekly optimization</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <button class="btn btn-primary btn-lg" id="openContactBtnHero">
+            <span>Claim Free 20-Min Growth Audit</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+          <a href="#case-study" class="btn btn-outline btn-lg">
+            <span>See Client Results</span>
+          </a>
+        </div>
+
+        <div class="hero-trust-bar">
+          <span class="trust-label">WHAT WE OPERATE FOR YOU:</span>
+          <div class="platform-tags">
+            <span class="tag">Instagram & Facebook Ads</span>
+            <span class="tag">Local Radius Targeting</span>
+            <span class="tag">Automated Email Loyalty</span>
+            <span class="tag">High-Converting Creative</span>
+            <span class="tag">Direct Sales Tracking</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Agency Services: "What We Do For You" -->
+    <section class="section services-section" id="services">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">WHAT WE DO FOR YOU</span>
+          <h2 class="section-title">Complete Customer Acquisition. Zero Technical Headache.</h2>
+          <p class="section-desc">You focus on running your business and serving great products. We handle every detail of bringing new and repeat customers to your door.</p>
+        </div>
+
+        <div class="services-grid">
+          <div class="service-box">
+            <div class="service-icon">🎯</div>
+            <h3 class="service-title">Hyper-Local Meta Paid Ads</h3>
+            <p class="service-desc">We craft scroll-stopping Instagram & Facebook video ads that target hungry foodies and shoppers living within 5 to 10 minutes of your business.</p>
+            <ul class="service-bullets">
+              <li>Pinpoint pincode & neighborhood geo-radius targeting</li>
+              <li>Appetizing video creative & compelling local offer copy</li>
+              <li>Daily campaign management to keep customer cost low</li>
+            </ul>
+          </div>
+
+          <div class="service-box">
+            <div class="service-icon">💌</div>
+            <h3 class="service-title">Automated Customer Retention</h3>
+            <p class="service-desc">Turn one-time walk-ins into loyal regulars. We build automated VIP welcome perks, weekly menu drops, and celebration specials that generate orders without ad spend.</p>
+            <ul class="service-bullets">
+              <li>Automated VIP welcome offers (45%+ verified open rates)</li>
+              <li>Thursday & Friday weekend pre-order alert emails</li>
+              <li>Zero-ad-cost repeat customer orders & festive bulk bookings</li>
+            </ul>
+          </div>
+
+          <div class="service-box">
+            <div class="service-icon">📊</div>
+            <h3 class="service-title">Transparent Profit Reporting</h3>
+            <p class="service-desc">No confusing spreadsheets or marketing jargon. You get simple weekly updates showing exactly what was spent, how many orders arrived, and your net revenue.</p>
+            <ul class="service-bullets">
+              <li>Real order and footfall tracking verified to your register</li>
+              <li>Clear weekly profit, return on ad spend (ROAS), and insights</li>
+              <li>Direct, responsive email access to agency founders</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Client Results Case Study -->
+    <section class="section pilot-section" id="case-study">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">PROVEN CLIENT IMPACT</span>
+          <h2 class="section-title">Case Study: How an Artisanal Bakery Achieved 4.2x ROAS</h2>
+          <p class="section-desc">
+            How Northlane replaced unpredictable street walk-ins with a steady stream of daily customers and fully pre-booked weekend orders.
+          </p>
+        </div>
+
+        <div class="pilot-grid">
+          <!-- Left Column: Before vs After Transformation -->
+          <div class="pilot-card funnel-card">
+            <div class="card-badge">THE TRANSFORMATION</div>
+            <h3 class="card-title">From Unpredictable to Sold Out</h3>
+            <p class="card-sub">What we changed to build a predictable, high-margin customer pipeline.</p>
+
+            <div class="transformation-item">
+              <div class="transformation-header">
+                <span class="badge-before">BEFORE NORTHLANE</span>
+                <span style="color: #F87171;">Unpredictable Walk-ins</span>
+              </div>
+              <p>Relying solely on street passersby, slow Tuesday and Wednesday sales, and zero collected contact details to invite past customers back.</p>
+            </div>
+
+            <div class="transformation-item">
+              <div class="transformation-header">
+                <span class="badge-after">THE NORTHLANE SYSTEM</span>
+                <span style="color: #34D399;">5km Hyper-Local Engine</span>
+              </div>
+              <p>Mouthwatering Instagram video reels of fresh morning pulls targeted within 5km, connected to an automated VIP email list offering 15% off first weekend orders.</p>
+            </div>
+
+            <div class="transformation-item">
+              <div class="transformation-header">
+                <span class="badge-after">THE FINAL OUTCOME</span>
+                <span style="color: var(--accent-cream);">Predictable Weekly Sellouts</span>
+              </div>
+              <p>Mid-week footfall stabilized with daily regulars. Weekend sourdough loaves, celebration cakes, and seasonal gift hampers sold out in advance every Friday.</p>
+            </div>
+          </div>
+
+          <!-- Right Column: Verified Metrics & Testimonial -->
+          <div class="pilot-card analytics-card">
+            <div class="card-badge green-badge">VERIFIED METRICS</div>
+            <h3 class="card-title">Real Numbers, Real Revenue</h3>
+            <p class="card-sub">Measured and verified across 90 days of active advertising.</p>
+
+            <div class="case-stats-grid">
+              <div class="case-stat-card">
+                <div class="case-stat-val">4.2x</div>
+                <div class="case-stat-lbl">Return on Ad Spend (ROAS)</div>
+              </div>
+              <div class="case-stat-card">
+                <div class="case-stat-val">850+</div>
+                <div class="case-stat-lbl">Monthly Direct Orders</div>
+              </div>
+              <div class="case-stat-card">
+                <div class="case-stat-val">+62%</div>
+                <div class="case-stat-lbl">Repeat Customer Rate</div>
+              </div>
+            </div>
+
+            <div class="client-quote-box">
+              <p>"Northlane completely took over our marketing. We went from guessing where our customers were coming from to having our weekend batches completely booked out by Friday afternoon. They treat our business like their own."</p>
+              <div class="client-quote-author">— Founder & Head Baker, Artisanal Bakery Partner</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3-Step Process: How We Work Together -->
+    <section class="section process-section" id="process">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">SIMPLE 3-STEP JOURNEY</span>
+          <h2 class="section-title">How We Work Together</h2>
+          <p class="section-desc">From our initial strategy call to your first wave of paying customers in under 7 business days.</p>
+        </div>
+
+        <div class="process-track">
+          <div class="process-card">
+            <div class="step-badge">STEP 01 (DAY 1 - 2)</div>
+            <h3 class="process-step-title">Free Growth Audit</h3>
+            <p>We analyze your local neighborhood, review your best-selling items, and show you exactly where new high-paying customers are waiting.</p>
+          </div>
+
+          <div class="process-card">
+            <div class="step-badge">STEP 02 (DAY 3 - 5)</div>
+            <h3 class="process-step-title">We Build Everything</h3>
+            <p>Our team scripts and designs your video ads, sets up hyper-local geo-targeting, and builds your automated customer email loyalty sequence.</p>
+          </div>
+
+          <div class="process-card highlight-card">
+            <div class="step-badge green-badge">STEP 03 (DAY 6 & BEYOND)</div>
+            <h3 class="process-step-title">You Serve New Customers</h3>
+            <p>Campaigns go live. Customers walk in and place orders. We monitor and optimize your ads every week to maximize your profit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Revenue & Growth Potential Calculator -->
+    <section class="section calculator-section" id="revenue-calculator">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">TRANSPARENT REVENUE PROJECTIONS</span>
+          <h2 class="section-title">See What Targeted Advertising Can Do For You</h2>
+          <p class="section-desc">Adjust the sliders below to estimate the monthly orders, local customer reach, and revenue potential for your business.</p>
+        </div>
+
+        <div class="calculator-card">
+          <div class="calc-inputs">
+            <div class="calc-group">
+              <div class="calc-label-row">
+                <label for="ordersSlider">Target Daily Customer Orders (Walk-ins & Online)</label>
+                <span class="calc-val-display" id="ordersDisplay">30 orders / day</span>
+              </div>
+              <input type="range" id="ordersSlider" min="10" max="150" step="5" value="30" class="custom-slider">
+              <div class="slider-ticks">
+                <span>10/day</span>
+                <span>50/day</span>
+                <span>100/day</span>
+                <span>150/day</span>
+              </div>
+            </div>
+
+            <div class="calc-group">
+              <div class="calc-label-row">
+                <label for="aovSlider">Average Customer Order Value (AOV)</label>
+                <span class="calc-val-display" id="aovDisplay">₹650</span>
+              </div>
+              <input type="range" id="aovSlider" min="200" max="3000" step="50" value="650" class="custom-slider">
+              <div class="slider-ticks">
+                <span>₹200</span>
+                <span>₹1,000</span>
+                <span>₹2,000</span>
+                <span>₹3,000</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-outputs">
+            <div class="output-item">
+              <span class="output-label">Estimated Monthly Local Reach</span>
+              <span class="output-number" id="impressionsResult">65,000 - 95,000</span>
+              <span class="output-sub">High-intent local foodies & shoppers in 5km radius</span>
+            </div>
+            <div class="output-item">
+              <span class="output-label">Monthly Customer Conversations & Orders</span>
+              <span class="output-number text-cyan" id="inquiriesResult">840 orders</span>
+              <span class="output-sub">High-margin direct customer checkouts</span>
+            </div>
+            <div class="output-item">
+              <span class="output-label">Projected Monthly Gross Revenue</span>
+              <span class="output-number text-emerald" id="revenueResult">₹5,85,000</span>
+              <span class="output-sub">Based on 900 orders/mo at selected AOV</span>
+            </div>
+          </div>
+
+          <div class="calc-cta-strip">
+            <p>Ready to validate these revenue projections for your brand?</p>
+            <button class="btn btn-primary" id="openContactBtnCalc">Lock In Your Strategy Call</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Strategic Contact & Inquiry Intake Section -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <span class="section-eyebrow">TAKE THE FIRST STEP</span>
+            <h2 class="section-title">Ready to flood your business with paying customers?</h2>
+            <p class="contact-text">
+              Speak directly with the founders of Northlane. Tell us about your business, your current customer volume, and where you want to grow next.
+            </p>
+
+            <div class="contact-highlights">
+              <div class="ch-item">
+                <div class="ch-icon">✓</div>
+                <div>
+                  <strong>Work Directly With Founders</strong>
+                  <p>No junior account managers. You collaborate directly with senior media buyers and creative directors.</p>
+                </div>
+              </div>
+              <div class="ch-item">
+                <div class="ch-icon">✓</div>
+                <div>
+                  <strong>Zero-Fluff Honesty</strong>
+                  <p>If we review your business and believe paid marketing is not the right move for you right now, we will tell you upfront.</p>
+                </div>
+              </div>
+              <div class="ch-item">
+                <div class="ch-icon">✓</div>
+                <div>
+                  <strong>Rapid Response Guarantee</strong>
+                  <p>Your inquiry is sent directly to our leadership desk for review within 4 business hours.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="founder-note">
+              <div class="founder-badge">OFFICIAL EMAIL DESK</div>
+              <p>All client communications and audits are handled strictly via official email and scheduled strategy calls:</p>
+              <a href="mailto:support@northlane.com?subject=Northlane%20Growth%20Audit%20Inquiry" class="email-direct-link">
+                <span>✉️ Email Founders: support@northlane.com</span>
+              </a>
+              <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 8px;">
+                Note: Inquiries and strategy briefs are reviewed and processed exclusively via official email.
+              </div>
+            </div>
+          </div>
+
+          <!-- Lead Intake Form -->
+          <div class="contact-form-card">
+            <div class="form-header">
+              <h3>Claim Your Free Growth Audit</h3>
+              <p>Complete this quick 1-minute brief to receive your custom market roadmap.</p>
+            </div>
+
+            <form id="leadIntakeForm" class="intake-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="clientName">Your Full Name <span class="required">*</span></label>
+                  <input type="text" id="clientName" name="name" placeholder="e.g. Rohan Mehta" required>
+                </div>
+                <div class="form-group">
+                  <label for="clientContact">Phone / Mobile (For Strategy Call) <span class="required">*</span></label>
+                  <input type="tel" id="clientContact" name="contact" placeholder="+91 98765 43210" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="clientEmail">Email Address <span class="required">*</span></label>
+                  <input type="email" id="clientEmail" name="email" placeholder="rohan@yourbusiness.com" required>
+                </div>
+                <div class="form-group">
+                  <label for="clientBusiness">Business / Brand Name <span class="required">*</span></label>
+                  <input type="text" id="clientBusiness" name="business" placeholder="e.g. Artisanal Bakes & Co." required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="clientCountry">Country <span class="required">*</span></label>
+                <input type="text" id="clientCountry" name="country" value="India" placeholder="India" required>
+              </div>
+
+              <div class="form-group">
+                <label for="clientNeeds">Your Business & Growth Goals <span class="required">*</span></label>
+                <textarea id="clientNeeds" name="needs" rows="3" placeholder="Tell us about your business, current customer orders, and what you'd like to achieve (e.g. We want to double our weekend orders and build a VIP customer list)..." required></textarea>
+              </div>
+
+              <div class="form-status" id="formStatus"></div>
+
+              <button type="submit" class="btn btn-primary btn-submit full-width" id="submitBtn">
+                <span id="submitBtnText">Submit for Executive Review</span>
+                <div class="spinner" id="submitSpinner" style="display: none;"></div>
+              </button>
+
+              <div class="form-privacy-note">
+                🔒 Your details are kept strictly confidential and reviewed only by Northlane agency partners.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-col brand-col">
+        <div class="brand-logo">
+          <div class="logo-symbol small">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M4 19V5L14 19V5" stroke="url(#footer-logo-grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="19" cy="5" r="2.5" fill="#FFD3AC" />
+              <defs>
+                <linearGradient id="footer-logo-grad" x1="4" y1="5" x2="19" y2="19" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FFD3AC"/>
+                  <stop offset="1" stop-color="#E5A975"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span class="brand-name">NORTHLANE<span class="brand-dot">.</span></span>
+        </div>
+        <p class="footer-motto">
+          Full-Service Meta Ads & Customer Acquisition for Ambitious Businesses.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Services</h4>
+        <ul class="footer-links">
+          <li><a href="#services">Hyper-Local Meta Ads</a></li>
+          <li><a href="#services">Automated Customer Retention</a></li>
+          <li><a href="#services">Transparent Profit Reporting</a></li>
+          <li><a href="#services">Reels Creative Direction</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Results & Tools</h4>
+        <ul class="footer-links">
+          <li><a href="#case-study">Bakery Case Study (4.2x ROAS)</a></li>
+          <li><a href="#revenue-calculator">Revenue Potential Estimator</a></li>
+          <li><a href="#process">3-Step Velocity Process</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Direct Inquiry</h4>
+        <p class="footer-note">
+          Official Agency Desk: <a href="mailto:support@northlane.com" style="color: var(--accent-cream); text-decoration: none; font-weight: 600;">support@northlane.com</a><br>
+          Executive responses dispatched within 4 business hours.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2026 Northlane Marketing & Advertising Agency. All rights reserved.</p>
+        <div class="footer-sublinks">
+          <a href="#contact">Contact Founders</a>
+          <a href="#navbar">Back to Top ↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal for Instant Strategy Consultation -->
+  <div class="modal-backdrop" id="consultationModal">
+    <div class="modal-container">
+      <button class="modal-close" id="modalCloseBtn">&times;</button>
+      <div class="modal-body">
+        <div class="modal-icon">🎯</div>
+        <h3 class="modal-title">Claim Your Free 20-Min Growth Strategy Session</h3>
+        <p class="modal-desc">Tell us about your business and goals. We will build a free local radius report before we speak.</p>
+        <button class="btn btn-primary full-width" id="modalScrollToForm">Jump to Quick Consultation Form</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Direct Contact Button -->
+  <a href="#contact" class="floating-cta" title="Get in touch with Northlane">
+    <span class="pulse-ring"></span>
+    <span class="floating-icon">✉️</span>
+    <span class="floating-label">Email / Consult Founders</span>
+  </a>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Secrets & Environment Variables (DO NOT COMMIT)
+.env
+.env.local
+.env.*.local
+
+# Private Customer Data Vault & Lead Databases
+private_vault/
+leads.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
