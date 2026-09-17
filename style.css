@@ -355,6 +355,11 @@ h1, h2, h3, .brand-name {
 
 .metric-icon {
   font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-cream);
+  flex-shrink: 0;
 }
 
 .metric-info {
@@ -446,6 +451,62 @@ h1, h2, h3, .brand-name {
 .section-desc {
   font-size: 1rem;
   color: var(--text-muted);
+}
+
+/* Services Grid & Boxes */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 992px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.service-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 36px 30px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-box:hover {
+  border-color: rgba(255, 211, 172, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+}
+
+.service-icon {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255, 211, 172, 0.08);
+  border: 1px solid rgba(255, 211, 172, 0.18);
+  color: var(--accent-cream);
+  margin-bottom: 22px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.case-stat-icon {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(255, 211, 172, 0.07);
+  border: 1px solid rgba(255, 211, 172, 0.16);
+  color: var(--accent-cream);
+  margin: 0 auto 10px;
 }
 
 /* Pilot Case Section (Bakery in India) */
