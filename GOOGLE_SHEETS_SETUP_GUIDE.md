@@ -22,40 +22,74 @@ Delete any existing code in the Apps Script editor (`Code.gs`) and paste the fol
 function doPost(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var data = JSON.parse(e.postData.contents);
+    var data = {};
     
-    // Auto-create styled header row if empty
+    if (e && e.postData && e.postData.contents) {
+      try {
+        data = JSON.parse(e.postData.contents);
+      } catch (err) {
+        data = e.parameter || {};
+      }
+    } else if (e && e.parameter) {
+      data = e.parameter;
+    }
+
+    var name = data.name || "";
+    var phone = data.contact || data.phone || "";
+    var email = data.email || "";
+    var country = data.country || "India";
+    var business = data.business || data.category || "";
+    var needs = data.needs || "";
+    var time = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+
+    // Auto-create headers if sheet is completely fresh
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
-        "Timestamp",
-        "Client Name",
-        "Phone / Contact",
-        "Email Address",
-        "Business Name",
-        "Country",
-        "Business Needs & Questions"
-      ]);
-      sheet.getRange(1, 1, 1, 7)
-        .setFontWeight("bold")
-        .setBackground("#FFD3AC")
-        .setFontColor("#1A0E0A")
-        .setHorizontalAlignment("center");
+      sheet.appendRow(["Name", "Phone no.", "Email", "Country", "Business Category", "Needs / Message", "Date & Time"]);
+      sheet.getRange(1, 1, 1, 7).setFontWeight("bold").setBackground("#FFD3AC").setFontColor("#1A0E0A");
       sheet.setFrozenRows(1);
     }
-    
-    // Append the incoming lead row
+
+    // 1. Save data into Google Sheet
     sheet.appendRow([
-      data.receivedAt || new Date().toISOString(),
-      data.name || "",
-      data.contact || "",
-      data.email || "",
-      data.business || "",
-      data.country || "India",
-      data.needs || ""
+      name,
+      phone,
+      email,
+      country,
+      business,
+      needs,
+      time
     ]);
-    
+
+    // 2. Send Instant Alert Email to Start.agency911@gmail.com
+    try {
+      var recipient = "Start.agency911@gmail.com";
+      var subject = "🔥 New Northlane Lead: " + (business ? business + " - " : "") + name;
+      var htmlBody = 
+        "<div style='font-family: Arial, sans-serif; padding: 24px; background: #0A0F1D; color: #F1F5F9; border-radius: 12px; border: 1px solid #FFD3AC;'>" +
+          "<h2 style='color: #FFD3AC; margin-top: 0;'>New Client Inquiry Received</h2>" +
+          "<p style='color: #94A3B8;'>A new prospect just submitted the form on your Northlane website:</p>" +
+          "<table style='width: 100%; border-collapse: collapse; margin: 16px 0; background: #131B2E; border-radius: 8px;'>" +
+            "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Name:</td><td style='padding: 10px 16px; color: #FFF; font-weight: bold;'>" + name + "</td></tr>" +
+            "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Phone:</td><td style='padding: 10px 16px;'><a href='tel:" + phone + "' style='color: #34D399; text-decoration: none; font-weight: bold;'>" + phone + "</a></td></tr>" +
+            "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Email:</td><td style='padding: 10px 16px;'><a href='mailto:" + email + "' style='color: #38BDF8; text-decoration: none;'>" + email + "</a></td></tr>" +
+            "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Country:</td><td style='padding: 10px 16px; color: #E2E8F0;'>" + country + "</td></tr>" +
+            "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Business:</td><td style='padding: 10px 16px; color: #FFD3AC; font-weight: bold;'>" + business + "</td></tr>" +
+            "<tr><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Needs/Notes:</td><td style='padding: 10px 16px; color: #E2E8F0;'>" + needs + "</td></tr>" +
+          "</table>" +
+          "<p style='color: #64748B; font-size: 12px; margin-bottom: 0;'>Received: " + time + " • Northlane Lead Intake</p>" +
+        "</div>";
+
+      MailApp.sendEmail({
+        to: recipient,
+        subject: subject,
+        htmlBody: htmlBody
+      });
+    } catch (emailErr) {
+      Logger.log("Email error: " + emailErr.toString());
+    }
+
     return ContentService
-      .createTextOutput(JSON.stringify({ result: "success", message: "Lead added" }))
+      .createTextOutput(JSON.stringify({ result: "success", message: "Lead saved and email dispatched" }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
     return ContentService

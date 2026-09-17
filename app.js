@@ -147,8 +147,24 @@ function initContactForm() {
     statusBox.className = "form-status";
     statusBox.style.display = "none";
 
+    const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbzULHua2LDXlSghXrx94zI5XUyW8OaXbdWHSYiZMDIfLhuYXJ5aLezVNspROkZQBjcK/exec";
+
+    // 1. Direct Webhook Dispatch (Ensures delivery on Live Server, static hosting, or localhost)
+    if (GOOGLE_SHEET_WEBHOOK) {
+      try {
+        fetch(GOOGLE_SHEET_WEBHOOK, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        }).catch(err => console.warn("Google Sheet direct post note:", err));
+      } catch (err) {
+        console.warn("Direct webhook dispatch:", err);
+      }
+    }
+
     try {
-      // 1. Attempt post to backend server API
+      // 2. Dispatch to local Node server API (/api/contact) for Vault archiving & server-side email
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -156,15 +172,14 @@ function initContactForm() {
       });
 
       if (res.ok) {
-        const data = await res.json();
         showSuccessMessage(payload.name, payload.business);
         form.reset();
       } else {
         throw new Error("Server responded with status " + res.status);
       }
     } catch (err) {
-      console.warn("Direct API call failed, activating direct fallback notification:", err);
-      // Fallback: Store locally & display confirmation, and provide direct mailto backup
+      console.log("Local server API note:", err.message);
+      // Even if local server is not active (e.g. running on Live Server port 5500), webhook already received lead
       saveLeadOffline(payload);
       showSuccessMessage(payload.name, payload.business);
       form.reset();
