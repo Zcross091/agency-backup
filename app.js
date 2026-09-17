@@ -4,7 +4,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu();
-  initRoasCalculator();
   initModalHandling();
   initContactForm();
   initSmoothScroll();
@@ -31,53 +30,7 @@ function initMobileMenu() {
 }
 
 /* --------------------------------------------------------------------------
-   2. Revenue Potential & Growth Calculator
-   -------------------------------------------------------------------------- */
-function initRoasCalculator() {
-  const ordersSlider = document.getElementById("ordersSlider");
-  const aovSlider = document.getElementById("aovSlider");
-
-  const ordersDisplay = document.getElementById("ordersDisplay");
-  const aovDisplay = document.getElementById("aovDisplay");
-
-  const impressionsResult = document.getElementById("impressionsResult");
-  const inquiriesResult = document.getElementById("inquiriesResult");
-  const revenueResult = document.getElementById("revenueResult");
-
-  if (!ordersSlider || !aovSlider) return;
-
-  function updateCalculations() {
-    const dailyOrders = parseFloat(ordersSlider.value);
-    const aov = parseFloat(aovSlider.value);
-    const monthlyOrders = dailyOrders * 30;
-
-    // Format display labels
-    ordersDisplay.textContent = `${dailyOrders} orders / day (${monthlyOrders.toLocaleString("en-IN")}/mo)`;
-    aovDisplay.textContent = `₹${aov.toLocaleString("en-IN")}`;
-
-    // Estimated Metrics:
-    // Local Impressions needed to generate this order volume in a 5km radius
-    const minReach = Math.round(dailyOrders * 2200);
-    const maxReach = Math.round(dailyOrders * 3200);
-
-    // Estimated Email & online inquiries (approx 1.8 customer touches per converted order)
-    const chats = Math.round(monthlyOrders * 1.8);
-
-    // Projected Monthly Gross Revenue
-    const monthlyRevenue = monthlyOrders * aov;
-
-    impressionsResult.textContent = `${minReach.toLocaleString("en-IN")} - ${maxReach.toLocaleString("en-IN")}`;
-    inquiriesResult.textContent = `${chats.toLocaleString("en-IN")} email & direct orders`;
-    revenueResult.textContent = `₹${monthlyRevenue.toLocaleString("en-IN")}`;
-  }
-
-  ordersSlider.addEventListener("input", updateCalculations);
-  aovSlider.addEventListener("input", updateCalculations);
-  updateCalculations();
-}
-
-/* --------------------------------------------------------------------------
-   4. Modal Handling
+   2. Modal Handling
    -------------------------------------------------------------------------- */
 function initModalHandling() {
   const modal = document.getElementById("consultationModal");
