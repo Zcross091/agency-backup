@@ -1169,16 +1169,9 @@ h1, h2, h3, .brand-name {
   cursor: pointer;
 }
 
-.form-group select option,
-.form-group select optgroup {
+.form-group select option {
   background: #140E0A;
   color: #FFFFFF;
-}
-
-.form-group select optgroup {
-  font-weight: 700;
-  color: var(--accent-cream);
-  font-size: 0.85rem;
 }
 
 .form-group input:focus,
