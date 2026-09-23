@@ -79,16 +79,42 @@ function initContactForm() {
 
   if (!form) return;
 
+  // Sync Country Dropdown with Country Code Selector
+  const countrySelect = document.getElementById("clientCountry");
+  const codeSelect = document.getElementById("phoneCountryCode");
+  if (countrySelect && codeSelect) {
+    countrySelect.addEventListener("change", () => {
+      const selected = countrySelect.value;
+      const matchingOpt = Array.from(codeSelect.options).find(opt => opt.getAttribute("data-country") === selected);
+      if (matchingOpt) {
+        codeSelect.value = matchingOpt.value;
+      }
+    });
+
+    codeSelect.addEventListener("change", () => {
+      const selectedOpt = codeSelect.options[codeSelect.selectedIndex];
+      const countryName = selectedOpt.getAttribute("data-country");
+      if (countryName && countrySelect.querySelector(`option[value="${countryName}"]`)) {
+        countrySelect.value = countryName;
+      }
+    });
+  }
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const formData = new FormData(form);
+    const countryCode = formData.get("countryCode") || "+91";
+    let rawContact = (formData.get("contact") || "").trim();
+    const fullContact = rawContact.startsWith("+") ? rawContact : `${countryCode} ${rawContact}`;
+
     const payload = {
       name: formData.get("name"),
-      contact: formData.get("contact"),
+      contact: fullContact,
+      phone: fullContact,
       email: formData.get("email"),
       business: formData.get("business"),
-      country: formData.get("country"),
+      country: formData.get("country") || "India",
       needs: formData.get("needs"),
       submittedAt: new Date().toISOString()
     };
@@ -100,9 +126,9 @@ function initContactForm() {
     statusBox.className = "form-status";
     statusBox.style.display = "none";
 
-    const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbxFbuwNvEGUGFWHWjWF_XHojkjCgS6kYw45Po06uNFp1htynuqyfL1QHeo7ADxAVoDM/exec";
+    const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbybmmwnzdohsTapXJvXh5LHVIclfCtUMlLbYPM308qkVjCz7fP3ayNtizF2IycBdclf/exec";
 
-    // 1. Direct Webhook Dispatch (Ensures delivery on Live Server, static hosting, or localhost)
+    // 1. Direct Webhook Dispatch (Ensures delivery on Live Server, Vercel, or localhost)
     if (GOOGLE_SHEET_WEBHOOK) {
       try {
         fetch(GOOGLE_SHEET_WEBHOOK, {
@@ -132,7 +158,7 @@ function initContactForm() {
       }
     } catch (err) {
       console.log("Local server API note:", err.message);
-      // Even if local server is not active (e.g. running on Live Server port 5500), webhook already received lead
+      // Even if local server is not active (e.g. running on Vercel or Live Server), webhook already received lead
       saveLeadOffline(payload);
       showSuccessMessage(payload.name, payload.business);
       form.reset();
@@ -149,7 +175,7 @@ function initContactForm() {
     statusBox.innerHTML = `
       <strong>✓ Strategy Brief Dispatched!</strong><br>
       Thank you, <b>${name}</b>. Your details for <b>${business}</b> have been securely dispatched to our leadership desk.<br>
-      Our team will review your local radius and contact you via Email within 4 business hours.
+      Our team will review your business requirements and contact you via Email within 4 business hours.
     `;
   }
 

@@ -92,6 +92,8 @@ function doPost(e) {
 
       MailApp.sendEmail({
         to: recipient,
+        name: "Northlane Leads",
+        replyTo: email,
         subject: subject,
         htmlBody: htmlBody
       });
