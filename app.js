@@ -87,15 +87,18 @@ function initContactForm() {
       const selected = countrySelect.value;
       const matchingOpt = Array.from(codeSelect.options).find(opt => opt.getAttribute("data-country") === selected);
       if (matchingOpt) {
-        codeSelect.value = matchingOpt.value;
+        codeSelect.selectedIndex = matchingOpt.index;
       }
     });
 
     codeSelect.addEventListener("change", () => {
       const selectedOpt = codeSelect.options[codeSelect.selectedIndex];
-      const countryName = selectedOpt.getAttribute("data-country");
-      if (countryName && countrySelect.querySelector(`option[value="${countryName}"]`)) {
-        countrySelect.value = countryName;
+      const countryName = selectedOpt ? selectedOpt.getAttribute("data-country") : null;
+      if (countryName) {
+        const matchingCountryOpt = Array.from(countrySelect.options).find(opt => opt.value === countryName);
+        if (matchingCountryOpt) {
+          countrySelect.selectedIndex = matchingCountryOpt.index;
+        }
       }
     });
   }
