@@ -1457,6 +1457,11 @@ h1, h2, h3, .brand-name {
 }
 
 /* Responsive Breakpoints */
+/* ==========================================================================
+   Comprehensive Mobile & Phone Screen Optimizations
+   Controls vertical screen ratio, reduces scrolling fatigue, and tightens cards/posters
+   ========================================================================== */
+
 @media (max-width: 992px) {
   .nav-links, .nav-actions {
     display: none;
@@ -1467,47 +1472,406 @@ h1, h2, h3, .brand-name {
   .mobile-menu.open {
     display: block;
   }
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
   .pilot-grid {
     grid-template-columns: 1fr;
+    gap: 22px;
   }
   .contact-grid {
     grid-template-columns: 1fr;
+    gap: 28px;
   }
   .footer-container {
     grid-template-columns: 1fr 1fr;
   }
-  .calc-inputs {
-    grid-template-columns: 1fr;
-  }
-  .calc-outputs {
-    grid-template-columns: 1fr;
-  }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  /* Compact Navbar */
+  .nav-container {
+    padding: 12px 16px;
+  }
+  .logo-symbol {
+    width: 32px;
+    height: 32px;
+  }
+  .brand-name {
+    font-size: 1.15rem;
+  }
+
+  /* Compact Global Section Spacing */
   .section {
-    padding: 60px 0;
+    padding: 42px 0 32px;
   }
+  .section-header {
+    margin: 0 auto 24px;
+    max-width: 100%;
+  }
+  .section-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 1.55rem;
+    line-height: 1.22;
+    margin-bottom: 8px;
+  }
+  .section-desc {
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+
+  /* Compact Hero Section */
   .hero-section {
-    padding: 70px 0 50px;
+    padding: 36px 0 28px;
+    min-height: auto;
   }
-  .pilot-card, .contact-form-card, .calculator-card {
-    padding: 24px 20px;
+  .hero-title {
+    font-size: 1.95rem;
+    line-height: 1.18;
+    margin-bottom: 12px;
+  }
+  .hero-subtext {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    margin-bottom: 20px;
+  }
+  .hero-metrics-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 22px;
+  }
+  .metric-pill {
+    padding: 8px 14px;
+    gap: 10px;
+    border-radius: var(--radius-sm);
+    justify-content: flex-start;
+  }
+  .metric-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+  .metric-val {
+    font-size: 0.88rem;
+  }
+  .metric-label {
+    font-size: 0.72rem;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 22px;
+  }
+  .hero-cta-group .btn {
+    width: 100%;
+    padding: 13px 20px;
+    font-size: 0.92rem;
+    justify-content: center;
+  }
+  .hero-trust-bar {
+    padding-top: 18px;
+    gap: 8px;
+  }
+  .trust-label {
+    font-size: 0.66rem;
+  }
+  .platform-tags {
+    gap: 6px;
+  }
+  .platform-tags .tag {
+    font-size: 0.72rem;
+    padding: 4px 10px;
+  }
+
+  /* Controlled Services Cards (Posters) */
+  .services-grid {
+    gap: 14px;
+  }
+  .service-box {
+    padding: 18px 16px;
+    border-radius: var(--radius-lg);
+  }
+  .service-icon {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+  }
+  .service-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .service-badge-pill {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    margin-bottom: 6px;
+  }
+  .service-title {
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+  }
+  .service-desc {
+    font-size: 0.82rem;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .service-bullets {
+    gap: 5px;
+    margin-top: 6px;
+  }
+  .service-bullets li {
+    font-size: 0.76rem;
+    line-height: 1.35;
+    padding-left: 14px;
+  }
+  .services-upcoming-banner {
+    margin: 16px auto 0;
+    padding: 9px 14px;
+    font-size: 0.76rem;
+    border-radius: var(--radius-full);
+  }
+
+  /* Controlled Approach & Deliverables Cards */
+  .pilot-grid {
+    gap: 16px;
+  }
+  .pilot-card {
+    padding: 18px 15px;
+    border-radius: var(--radius-lg);
+  }
+  .card-badge {
+    font-size: 0.66rem;
+    padding: 2px 8px;
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 4px;
+  }
+  .card-sub {
+    font-size: 0.8rem;
+    line-height: 1.38;
+    margin-bottom: 14px;
+  }
+  .transformation-item {
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-radius: var(--radius-sm);
+    gap: 3px;
+  }
+  .transformation-header {
+    font-size: 0.7rem;
+    gap: 6px;
+  }
+  .transformation-item p {
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+  .case-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .case-stat-card {
+    padding: 8px 4px;
+    border-radius: 8px;
+  }
+  .case-stat-icon {
+    width: 28px;
+    height: 28px;
+    margin: 0 auto 4px;
+    border-radius: 6px;
+  }
+  .case-stat-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+  .case-stat-lbl {
+    font-size: 0.64rem;
+    line-height: 1.2;
+    margin-top: 2px;
+  }
+  .client-quote-box {
+    padding: 10px 12px;
+    margin-top: 10px;
+    border-left-width: 2px;
+  }
+  .client-quote-box p {
+    font-size: 0.78rem;
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .client-quote-author {
+    font-size: 0.7rem;
+  }
+
+  /* Controlled 3-Step Process Track */
+  .process-track {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .process-card {
+    padding: 16px 14px;
+    border-radius: var(--radius-md);
+  }
+  .step-badge {
+    font-size: 0.66rem;
+    padding: 2px 7px;
+    margin-bottom: 6px;
+  }
+  .process-step-title {
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+  }
+  .process-card p {
+    font-size: 0.8rem;
+    line-height: 1.38;
+  }
+
+  /* Controlled Strategic Contact & Intake Section */
+  .contact-grid {
+    gap: 20px;
+  }
+  .contact-text {
+    font-size: 0.85rem;
+    line-height: 1.42;
+    margin-bottom: 14px;
+  }
+  .contact-highlights {
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .ch-item {
+    gap: 10px;
+  }
+  .ch-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 0.68rem;
+  }
+  .ch-item strong {
+    font-size: 0.86rem;
+  }
+  .ch-item p {
+    font-size: 0.76rem;
+    line-height: 1.32;
+  }
+
+  /* Intake Form Card */
+  .contact-form-card {
+    padding: 18px 14px;
+    border-radius: var(--radius-lg);
+  }
+  .form-header {
+    margin-bottom: 14px;
+  }
+  .form-header h3 {
+    font-size: 1.28rem;
+    margin-bottom: 3px;
+  }
+  .form-header p {
+    font-size: 0.78rem;
   }
   .form-row {
     grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .form-group {
+    margin-bottom: 11px;
+  }
+  .form-group label {
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 9px 11px;
+    font-size: 0.84rem;
+    border-radius: 8px;
+  }
+  .phone-input-group {
+    display: flex;
+    gap: 8px;
+  }
+  .country-code-select {
+    width: 115px !important;
+    font-size: 0.8rem;
+    padding: 9px 4px;
+    flex-shrink: 0;
+  }
+  .phone-input-group input {
+    flex: 1;
+    min-width: 0;
+  }
+  .btn-submit {
+    padding: 12px 18px;
+    font-size: 0.92rem;
+  }
+  .form-privacy-note {
+    font-size: 0.68rem;
+    margin-top: 8px;
+    line-height: 1.3;
+  }
+
+  /* Compact Footer */
+  .footer {
+    padding: 36px 0 18px;
   }
   .footer-container {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .footer-brand p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+  .footer-heading {
+    font-size: 0.82rem;
+    margin-bottom: 8px;
+  }
+  .footer-links {
+    gap: 6px;
+  }
+  .footer-links a {
+    font-size: 0.78rem;
   }
   .footer-bottom-inner {
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     text-align: center;
+    font-size: 0.72rem;
   }
-  .calc-cta-strip {
-    flex-direction: column;
-    gap: 16px;
-    text-align: center;
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.7rem;
+    line-height: 1.16;
+  }
+  .section-title {
+    font-size: 1.38rem;
+  }
+  .country-code-select {
+    width: 105px !important;
+    font-size: 0.78rem;
+  }
+  .case-stat-lbl {
+    font-size: 0.6rem;
   }
 }
