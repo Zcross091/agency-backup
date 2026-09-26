@@ -286,12 +286,8 @@ server.listen(PORT, () => {
 // Helper: Stream lead to Google Sheets Apps Script Webhook
 async function syncToGoogleSheet(lead) {
   try {
-    const rawContact = String(lead.contact || lead.phone || "").trim();
-    const sheetData = {
-      ...lead,
-      contact: "'" + rawContact.replace(/^'+/, ""),
-      phone: "'" + rawContact.replace(/^'+/, "")
-    };
+    // Send clean phone data — Apps Script handles text formatting via setNumberFormat('@')
+    const sheetData = { ...lead };
 
     const res = await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
       method: "POST",

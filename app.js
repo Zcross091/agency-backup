@@ -134,18 +134,12 @@ function initContactForm() {
     // 1. Direct Webhook Dispatch (Ensures delivery on Live Server, Vercel, or localhost)
     if (GOOGLE_SHEET_WEBHOOK) {
       try {
-        // Prefix with ' for Google Sheets so +country codes are saved as text and never trigger #ERROR! formula parse error
-        const sheetPayload = {
-          ...payload,
-          contact: "'" + fullContact.replace(/^'+/, ""),
-          phone: "'" + fullContact.replace(/^'+/, "")
-        };
-
+        // Send clean phone data — Apps Script handles text formatting via setNumberFormat('@')
         fetch(GOOGLE_SHEET_WEBHOOK, {
           method: "POST",
           mode: "no-cors",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(sheetPayload)
+          body: JSON.stringify(payload)
         }).catch(err => console.warn("Google Sheet direct post note:", err));
       } catch (err) {
         console.warn("Direct webhook dispatch:", err);
