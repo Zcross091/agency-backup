@@ -286,10 +286,17 @@ server.listen(PORT, () => {
 // Helper: Stream lead to Google Sheets Apps Script Webhook
 async function syncToGoogleSheet(lead) {
   try {
+    const rawContact = String(lead.contact || lead.phone || "").trim();
+    const sheetData = {
+      ...lead,
+      contact: "'" + rawContact.replace(/^'+/, ""),
+      phone: "'" + rawContact.replace(/^'+/, "")
+    };
+
     const res = await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(lead),
+      body: JSON.stringify(sheetData),
       redirect: "follow"
     });
     console.log(`[Northlane Google Sheets Engine] ✓ Lead successfully added to Google Sheet (HTTP ${res.status})`);

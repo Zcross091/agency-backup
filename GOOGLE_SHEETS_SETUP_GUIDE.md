@@ -46,12 +46,16 @@ function doPost(e) {
     }
 
     var name = data.name || "";
-    var phone = data.contact || data.phone || "";
+    var rawPhone = (data.contact || data.phone || "").toString().trim();
     var email = data.email || "";
     var country = data.country || "India";
     var business = data.business || data.category || "";
     var needs = data.needs || "";
     var time = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+
+    // Format phone with ' for Google Sheets so +country codes never trigger formula parse error (#ERROR!)
+    var sheetPhone = rawPhone ? ("'" + rawPhone.replace(/^'+/, "")) : "";
+    var emailPhone = rawPhone.replace(/^'+/, "");
 
     // Auto-create headers if sheet is empty
     if (sheet.getLastRow() === 0) {
@@ -60,10 +64,10 @@ function doPost(e) {
       sheet.setFrozenRows(1);
     }
 
-    // 1. Google Sheet me Row append karein
+    // 1. Google Sheet me Row append karein (sheetPhone uses ' prefix to render cleanly as text)
     sheet.appendRow([
       name,
-      phone,
+      sheetPhone,
       email,
       country,
       business,
@@ -81,7 +85,7 @@ function doPost(e) {
           "<p style='color: #94A3B8;'>A new prospect submitted their details on your Northlane website:</p>" +
           "<table style='width: 100%; border-collapse: collapse; margin: 16px 0; background: #131B2E; border-radius: 8px;'>" +
             "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Name:</td><td style='padding: 10px 16px; color: #FFF; font-weight: bold;'>" + name + "</td></tr>" +
-            "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Phone:</td><td style='padding: 10px 16px;'><a href='tel:" + phone + "' style='color: #34D399; text-decoration: none; font-weight: bold;'>" + phone + "</a></td></tr>" +
+            "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Phone:</td><td style='padding: 10px 16px;'><a href='tel:" + emailPhone + "' style='color: #34D399; text-decoration: none; font-weight: bold;'>" + emailPhone + "</a></td></tr>" +
             "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Email:</td><td style='padding: 10px 16px;'><a href='mailto:" + email + "' style='color: #38BDF8; text-decoration: none;'>" + email + "</a></td></tr>" +
             "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Country:</td><td style='padding: 10px 16px; color: #E2E8F0;'>" + country + "</td></tr>" +
             "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Business:</td><td style='padding: 10px 16px; color: #FFD3AC; font-weight: bold;'>" + business + "</td></tr>" +
