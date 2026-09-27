@@ -122,11 +122,11 @@ function doPost(e) {
           fields: [
             { name: "👤 Client Name", value: "**" + (name || "Valued Client") + "**", inline: true },
             { name: "💼 Business / Brand", value: "**" + (business || "N/A") + "**", inline: true },
-            { name: "🌍 Country", value: "`" + country + "`", inline: true },
-            { name: "📞 Phone / WhatsApp", value: cleanPhone ? "[`" + cleanPhone + "`](tel:" + cleanPhone.replace(/[^0-9+]/g, "") + ")" : "*Not provided*", inline: true },
-            { name: "✉️ Email Address", value: email ? "[" + email + "](mailto:" + email + ")" : "*Not provided*", inline: true },
-            { name: "⏰ Submitted At", value: "`" + time + "`", inline: true },
-            { name: "🎯 Goals & Business Requirements", value: "```fix\n" + (needs || "None specified") + "\n```", inline: false }
+            { name: "🌍 Country", value: country || "India", inline: true },
+            { name: "📞 Phone / WhatsApp", value: cleanPhone ? "**" + cleanPhone + "**" : "Not provided", inline: true },
+            { name: "✉️ Email Address", value: email || "Not provided", inline: true },
+            { name: "⏰ Submitted At", value: time, inline: true },
+            { name: "🎯 Goals & Business Requirements", value: needs ? ("> " + needs.split("\n").join("\n> ")) : "None specified", inline: false }
           ],
           footer: {
             text: "Northlane Performance Marketing OS • Automated Lead Dispatch",
