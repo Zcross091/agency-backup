@@ -109,8 +109,45 @@ function doPost(e) {
       Logger.log("Email dispatch note: " + emailErr.toString());
     }
 
+    // 3. Dispatch Rich VIP Embed to Discord Channel (Channel 1546898866929016952)
+    try {
+      var discordWebhookUrl = "https://discord.com/api/webhooks/1546899444933333244/b7Yd7ViuySu23i9e_pITC01e24Wl6OyiPZKNqo4TTYDaSJ8fkGiUkKbFCtc2eLAa0Wh9";
+      var discordPayload = {
+        username: "Northlane Executive Desk",
+        avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
+        embeds: [{
+          title: "🌟 NEW INCOMING CLIENT INQUIRY",
+          description: "A high-intent prospect has submitted their strategic consultation request via the agency website.",
+          color: 16765868, // #FFD3AC Warm Luxury Gold
+          fields: [
+            { name: "👤 Client Name", value: "**" + (name || "Valued Client") + "**", inline: true },
+            { name: "💼 Business / Brand", value: "**" + (business || "N/A") + "**", inline: true },
+            { name: "🌍 Country", value: "`" + country + "`", inline: true },
+            { name: "📞 Phone / WhatsApp", value: cleanPhone ? "[`" + cleanPhone + "`](tel:" + cleanPhone.replace(/[^0-9+]/g, "") + ")" : "*Not provided*", inline: true },
+            { name: "✉️ Email Address", value: email ? "[" + email + "](mailto:" + email + ")" : "*Not provided*", inline: true },
+            { name: "⏰ Submitted At", value: "`" + time + "`", inline: true },
+            { name: "🎯 Goals & Business Requirements", value: "```fix\n" + (needs || "None specified") + "\n```", inline: false }
+          ],
+          footer: {
+            text: "Northlane Performance Marketing OS • Automated Lead Dispatch",
+            icon_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png"
+          },
+          timestamp: new Date().toISOString()
+        }]
+      };
+
+      UrlFetchApp.fetch(discordWebhookUrl, {
+        method: "post",
+        contentType: "application/json",
+        payload: JSON.stringify(discordPayload),
+        muteHttpExceptions: true
+      });
+    } catch (dcErr) {
+      Logger.log("Discord dispatch note: " + dcErr.toString());
+    }
+
     return ContentService
-      .createTextOutput(JSON.stringify({ result: "success", message: "Saved to sheet and email sent" }))
+      .createTextOutput(JSON.stringify({ result: "success", message: "Saved to sheet, email sent, and dispatched to Discord" }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
     return ContentService

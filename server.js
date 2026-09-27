@@ -26,6 +26,7 @@ const AGENCY_EMAIL = process.env.AGENCY_EMAIL || "Start.agency911@gmail.com";
 const GMAIL_PASSWORD = process.env.GMAIL_PASSWORD || process.env.temporary_company_email_password || "Start@9368";
 const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || "1rYlHBcx0tvh0EbvB_JLuprSJx3HdqABmGsHP1JRH8zw";
 const GOOGLE_SHEET_WEBHOOK_URL = process.env.GOOGLE_SHEET_WEBHOOK_URL || "";
+const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || "https://discord.com/api/webhooks/1546899444933333244/b7Yd7ViuySu23i9e_pITC01e24Wl6OyiPZKNqo4TTYDaSJ8fkGiUkKbFCtc2eLAa0Wh9";
 
 // Nodemailer transporter setup
 let transporter = null;
@@ -216,6 +217,11 @@ const server = http.createServer(async (req, res) => {
           console.log(`[Northlane Google Sheets Engine] Target Sheet ID: ${GOOGLE_SHEET_ID}. (Set GOOGLE_SHEET_WEBHOOK_URL in .env to stream rows live).`);
         }
 
+        // 4. Dispatch Rich Embed to Discord Channel (Support/Leads)
+        if (DISCORD_WEBHOOK_URL) {
+          dispatchToDiscord(leadRecord);
+        }
+
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({
           success: true,
@@ -300,3 +306,80 @@ async function syncToGoogleSheet(lead) {
     console.warn(`[Northlane Google Sheets Engine] Note on Google Sheet delivery:`, err.message);
   }
 }
+
+// Helper: Dispatch ultra-premium styled embed alert to Discord Channel via Webhook
+async function dispatchToDiscord(lead) {
+  try {
+    const rawContact = String(lead.contact || lead.phone || "").trim().replace(/^'+/, "");
+    const name = lead.name || "Valued Client";
+    const business = lead.business || "N/A";
+    const email = lead.email || "N/A";
+    const country = lead.country || "India";
+    const needs = lead.needs || "No additional comments provided.";
+
+    const discordPayload = {
+      username: "Northlane Executive Desk",
+      avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
+      embeds: [
+        {
+          title: "🌟 NEW INCOMING CLIENT INQUIRY",
+          description: "A high-intent prospect has submitted their strategic consultation request via the agency website.",
+          color: 0xFFD3AC, // Northlane Warm Luxury Gold
+          fields: [
+            {
+              name: "👤 Client Name",
+              value: `**${name}**`,
+              inline: true
+            },
+            {
+              name: "💼 Business / Brand",
+              value: `**${business}**`,
+              inline: true
+            },
+            {
+              name: "🌍 Country",
+              value: `\`${country}\``,
+              inline: true
+            },
+            {
+              name: "📞 Phone / WhatsApp",
+              value: rawContact ? `[\`${rawContact}\`](tel:${rawContact.replace(/[^0-9+]/g, "")})` : "*Not provided*",
+              inline: true
+            },
+            {
+              name: "✉️ Email Address",
+              value: email ? `[${email}](mailto:${email})` : "*Not provided*",
+              inline: true
+            },
+            {
+              name: "⏰ Submitted At",
+              value: `<t:${Math.floor(Date.now() / 1000)}:R>`,
+              inline: true
+            },
+            {
+              name: "🎯 Goals & Business Requirements",
+              value: `\`\`\`fix\n${needs.slice(0, 1000)}\n\`\`\``,
+              inline: false
+            }
+          ],
+          footer: {
+            text: "Northlane Performance Marketing OS • Automated Lead Dispatch",
+            icon_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png"
+          },
+          timestamp: new Date().toISOString()
+        }
+      ]
+    };
+
+    const res = await fetch(DISCORD_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(discordPayload)
+    });
+
+    console.log(`[Northlane Discord Engine] ✓ Lead dispatched to Discord channel (HTTP ${res.status})`);
+  } catch (err) {
+    console.warn(`[Northlane Discord Engine] Note on Discord webhook dispatch:`, err.message);
+  }
+}
+
