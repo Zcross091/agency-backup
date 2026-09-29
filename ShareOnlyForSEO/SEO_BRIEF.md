@@ -7,9 +7,7 @@ Here are the frontend files for our agency website (`https://northexmarketing.co
 ### About the Business & Target Audience
 
 Our core clients:
-
-###These will be updated later
-
+### These will be updated later
 - Local retail storefronts & modern businesses
 - Artisanal bakeries, cafes, boutique food brands
 - High-ticket service businesses looking for real customer acquisition and ROAS
