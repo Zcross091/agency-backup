@@ -1,6 +1,6 @@
-# Northlane Agency: Custom Domain, CNAME & Free Business Email Master Guide
+# Northex Agency: Custom Domain, CNAME & Free Business Email Master Guide
 
-> **Lakshya (Goal)**: Jab aap Northlane ke liye domain khareedenge (jaise `northexmarketing.com`), toh apni website ko connect karna, aur bina kisi monthly charges ke **100% Free** professional email (jaise `support@northexmarketing.com`) banana jisme **Password, Password Change, Account Login, aur Logout** sabhi features ho.
+> **Lakshya (Goal)**: Jab aap Northex ke liye domain khareedenge (jaise `northexmarketing.com`), toh apni website ko connect karna, aur bina kisi monthly charges ke **100% Free** professional email (jaise `support@northexmarketing.com`) banana jisme **Password, Password Change, Account Login, aur Logout** sabhi features ho.
 
 ---
 
@@ -41,7 +41,7 @@ Apne Domain provider (Cloudflare / Namecheap / GoDaddy / Hostinger) ke **DNS Man
 
 #### Step 3: Username & Password Banana
 1. Setup wizard me apna email ID choose karein: **`support@northexmarketing.com`**.
-2. Apna **Strong Password** set karein (e.g., `Northlane#Support2026`).
+2. Apna **Strong Password** set karein (e.g., `Northex#Support2026`).
 
 ---
 
@@ -51,7 +51,7 @@ Apne Domain provider (Cloudflare / Namecheap / GoDaddy / Hostinger) ke **DNS Man
 1. Browser me jayein: **[mail.zoho.com](https://mail.zoho.com)**
 2. Apna email dalein: `support@northexmarketing.com`
 3. Apna password enter karein.
-4. ✅ Aapka official Northlane agency inbox open ho jayega! Yahan se aap clients ko emails bhej sakte hain aur unke replies receive kar sakte hain.
+4. ✅ Aapka official Northex agency inbox open ho jayega! Yahan se aap clients ko emails bhej sakte hain aur unke replies receive kar sakte hain.
 
 #### 🔄 Password Change Kaise Karein:
 1. `mail.zoho.com` me login hone ke baad, top right corner par apni **Profile Icon** par click karein.

@@ -1,7 +1,7 @@
 # Google Sheets Live Backend Integration Guide
 ### Connected Sheet: [Temp - Google Sheets](https://docs.google.com/spreadsheets/d/1rYlHBcx0tvh0EbvB_JLuprSJx3HdqABmGsHP1JRH8zw/edit?gid=0#gid=0)
 
-Your Northlane backend is now fully engineered to automatically stream incoming leads directly into your Google Sheet (`Temp - Google Sheets`) in real-time.
+Your Northex backend is now fully engineered to automatically stream incoming leads directly into your Google Sheet (`Temp - Google Sheets`) in real-time.
 
 ---
 
@@ -82,11 +82,11 @@ function doPost(e) {
     // Send email with clean phone (no single-quote prefix)
     try {
       var recipient = "Start.agency911@gmail.com";
-      var subject = "🔥 New Northlane Lead: " + (business ? business + " - " : "") + name;
+      var subject = "🔥 New Northex Lead: " + (business ? business + " - " : "") + name;
       var htmlBody = 
         "<div style='font-family: Arial, sans-serif; padding: 24px; background: #0A0F1D; color: #F1F5F9; border-radius: 12px; border: 1px solid #FFD3AC;'>" +
           "<h2 style='color: #FFD3AC; margin-top: 0;'>New Client Inquiry Received</h2>" +
-          "<p style='color: #94A3B8;'>A new prospect submitted their details on your Northlane website:</p>" +
+          "<p style='color: #94A3B8;'>A new prospect submitted their details on your Northex website:</p>" +
           "<table style='width: 100%; border-collapse: collapse; margin: 16px 0; background: #131B2E; border-radius: 8px;'>" +
             "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Name:</td><td style='padding: 10px 16px; color: #FFF; font-weight: bold;'>" + name + "</td></tr>" +
             "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Phone:</td><td style='padding: 10px 16px;'><a href='tel:" + cleanPhone + "' style='color: #34D399; text-decoration: none; font-weight: bold;'>" + cleanPhone + "</a></td></tr>" +
@@ -95,12 +95,12 @@ function doPost(e) {
             "<tr style='border-bottom: 1px solid rgba(255,255,255,0.06);'><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Business:</td><td style='padding: 10px 16px; color: #FFD3AC; font-weight: bold;'>" + business + "</td></tr>" +
             "<tr><td style='padding: 10px 16px; color: #94A3B8; font-weight: bold;'>Needs / Notes:</td><td style='padding: 10px 16px; color: #E2E8F0;'>" + needs + "</td></tr>" +
           "</table>" +
-          "<p style='color: #64748B; font-size: 12px; margin-bottom: 0;'>Logged: " + time + " • Northlane Lead Intake</p>" +
+          "<p style='color: #64748B; font-size: 12px; margin-bottom: 0;'>Logged: " + time + " • Northex Lead Intake</p>" +
         "</div>";
 
       MailApp.sendEmail({
         to: recipient,
-        name: "Northlane Leads",
+        name: "Northex Leads",
         replyTo: email,
         subject: subject,
         htmlBody: htmlBody
@@ -113,7 +113,7 @@ function doPost(e) {
     try {
       var discordWebhookUrl = "https://discord.com/api/webhooks/1546899444933333244/b7Yd7ViuySu23i9e_pITC01e24Wl6OyiPZKNqo4TTYDaSJ8fkGiUkKbFCtc2eLAa0Wh9";
       var discordPayload = {
-        username: "Northlane Executive Desk",
+        username: "Northex Executive Desk",
         avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
         embeds: [{
           title: "🌟 NEW INCOMING CLIENT INQUIRY",
@@ -129,7 +129,7 @@ function doPost(e) {
             { name: "🎯 Goals & Business Requirements", value: needs ? ("> " + needs.split("\n").join("\n> ")) : "None specified", inline: false }
           ],
           footer: {
-            text: "Northlane Performance Marketing OS • Automated Lead Dispatch",
+            text: "Northex Performance Marketing OS • Automated Lead Dispatch",
             icon_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png"
           },
           timestamp: new Date().toISOString()
@@ -163,7 +163,7 @@ function testLead() {
       contents: JSON.stringify({
         name: "Test Client",
         contact: "+91 98765 43210",
-        email: "test@northlane.com",
+        email: "test@northexmarketing.com",
         country: "India",
         business: "Artisanal Cafe",
         needs: "Testing live Google Sheet and Email integration"
@@ -181,7 +181,7 @@ function testLead() {
 1. Click the blue **Deploy** (तैनात करें) button at top right > **New deployment** (नई तैनाती).
 2. Click the gear icon ⚙️ next to "Select type" and choose **Web app**.
 3. Set the options:
-   * **Description**: `Northlane Lead Streamer`
+   * **Description**: `Northex Lead Streamer`
    * **Execute as**: `Me (your email)`
    * **Who has access**: `Anyone` *(taaki aapka website server direct data push kar sake bina login error ke)*.
 4. Click **Deploy** and click **Authorize access** (choose your Google account, click *Advanced > Go to Untitled project (unsafe)* > *Allow*).

@@ -39,7 +39,7 @@ try {
     }
   });
 } catch (err) {
-  console.warn("[Northlane Server] Nodemailer initialization warning:", err.message);
+  console.warn("[Northex Server] Nodemailer initialization warning:", err.message);
 }
 
 const MIME_TYPES = {
@@ -139,19 +139,19 @@ const server = http.createServer(async (req, res) => {
         const rootLeadsFile = path.join(__dirname, "leads.json");
         fs.writeFileSync(rootLeadsFile, JSON.stringify(ledger, null, 2));
 
-        console.log(`[Northlane Private Vault] Lead securely archived: ${individualLeadFile} & ${csvFile}`);
+        console.log(`[Northex Private Vault] Lead securely archived: ${individualLeadFile} & ${csvFile}`);
 
         // 2. Dispatch automated email alert to Start.agency911@gmail.com
         if (transporter) {
           const emailHtml = `
             <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 620px; margin: 0 auto; background: #0A0F1D; color: #F1F5F9; border-radius: 16px; overflow: hidden; border: 1px solid rgba(0, 229, 255, 0.2);">
               <div style="background: linear-gradient(135deg, #00E5FF, #10B981); padding: 24px 30px;">
-                <h1 style="margin: 0; color: #050811; font-size: 22px; font-weight: 800; letter-spacing: 0.05em;">NORTHLANE • NEW PROSPECT INQUIRY</h1>
+                <h1 style="margin: 0; color: #050811; font-size: 22px; font-weight: 800; letter-spacing: 0.05em;">NORTHEX • NEW PROSPECT INQUIRY</h1>
                 <p style="margin: 4px 0 0; color: #050811; font-size: 13px; font-weight: 600;">Immediate Executive Growth Consultation Request</p>
               </div>
 
               <div style="padding: 30px;">
-                <p style="font-size: 15px; color: #94A3B8; margin-top: 0;">A potential client has submitted their business details via the Northlane Agency portal:</p>
+                <p style="font-size: 15px; color: #94A3B8; margin-top: 0;">A potential client has submitted their business details via the Northex Agency portal:</p>
 
                 <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background: #0F172A; border-radius: 10px; overflow: hidden;">
                   <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
@@ -182,7 +182,7 @@ const server = http.createServer(async (req, res) => {
                 </div>
 
                 <div style="text-align: center; margin-top: 25px;">
-                  <a href="mailto:${email}?subject=Northlane%20Growth%20Audit%20Proposal%20for%20${encodeURIComponent(business || name)}" style="display: inline-block; background: #FFD3AC; color: #1a0f07; padding: 12px 24px; border-radius: 999px; font-weight: bold; font-size: 14px; text-decoration: none; margin-right: 8px;">
+                  <a href="mailto:${email}?subject=Northex%20Growth%20Audit%20Proposal%20for%20${encodeURIComponent(business || name)}" style="display: inline-block; background: #FFD3AC; color: #1a0f07; padding: 12px 24px; border-radius: 999px; font-weight: bold; font-size: 14px; text-decoration: none; margin-right: 8px;">
                     ✉️ Reply via Email to ${name}
                   </a>
                   <a href="tel:${contact.replace(/[^0-9+]/g, "")}" style="display: inline-block; background: #1E293B; color: #F8FAFC; padding: 12px 20px; border-radius: 999px; font-weight: bold; font-size: 14px; text-decoration: none;">
@@ -192,21 +192,21 @@ const server = http.createServer(async (req, res) => {
               </div>
 
               <div style="background: #060913; padding: 16px 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); font-size: 12px; color: #64748B;">
-                Northlane Performance Marketing OS • Automated Lead Dispatch
+                Northex Performance Marketing OS • Automated Lead Dispatch
               </div>
             </div>
           `;
 
           transporter.sendMail({
-            from: `"Northlane Lead Intake" <${AGENCY_EMAIL}>`,
+            from: `"Northex Lead Intake" <${AGENCY_EMAIL}>`,
             to: AGENCY_EMAIL,
             replyTo: email,
             subject: `🔥 NEW CLIENT INQUIRY: ${business || name} (${contact})`,
             html: emailHtml
           }).then((info) => {
-            console.log(`[Northlane Lead Engine] Email sent successfully to ${AGENCY_EMAIL} (MsgId: ${info.messageId})`);
+            console.log(`[Northex Lead Engine] Email sent successfully to ${AGENCY_EMAIL} (MsgId: ${info.messageId})`);
           }).catch((err) => {
-            console.warn(`[Northlane Lead Engine] Note on email delivery to ${AGENCY_EMAIL}:`, err.message);
+            console.warn(`[Northex Lead Engine] Note on email delivery to ${AGENCY_EMAIL}:`, err.message);
           });
         }
 
@@ -214,7 +214,7 @@ const server = http.createServer(async (req, res) => {
         if (GOOGLE_SHEET_WEBHOOK_URL) {
           syncToGoogleSheet(leadRecord);
         } else {
-          console.log(`[Northlane Google Sheets Engine] Target Sheet ID: ${GOOGLE_SHEET_ID}. (Set GOOGLE_SHEET_WEBHOOK_URL in .env to stream rows live).`);
+          console.log(`[Northex Google Sheets Engine] Target Sheet ID: ${GOOGLE_SHEET_ID}. (Set GOOGLE_SHEET_WEBHOOK_URL in .env to stream rows live).`);
         }
 
         // 4. Dispatch Rich Embed to Discord Channel (Support/Leads)
@@ -228,7 +228,7 @@ const server = http.createServer(async (req, res) => {
           message: `Inquiry received for ${business || name}. Executive brief routed to ${AGENCY_EMAIL}.`
         }));
       } catch (err) {
-        console.error("[Northlane Server] Error processing /api/contact:", err);
+        console.error("[Northex Server] Error processing /api/contact:", err);
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ success: false, error: "Internal processing error." }));
       }
@@ -277,7 +277,7 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`\n========================================================`);
-  console.log(`🚀 NORTHLANE ADVERTISING AGENCY WEBSITE ACTIVE`);
+  console.log(`🚀 NORTHEX ADVERTISING AGENCY WEBSITE ACTIVE`);
   console.log(`🌐 Local URL: http://localhost:${PORT}`);
   console.log(`📧 Leads Notification Target: ${AGENCY_EMAIL}`);
   console.log(`📊 Google Sheet Target: https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/edit`);
@@ -301,9 +301,9 @@ async function syncToGoogleSheet(lead) {
       body: JSON.stringify(sheetData),
       redirect: "follow"
     });
-    console.log(`[Northlane Google Sheets Engine] ✓ Lead successfully added to Google Sheet (HTTP ${res.status})`);
+    console.log(`[Northex Google Sheets Engine] ✓ Lead successfully added to Google Sheet (HTTP ${res.status})`);
   } catch (err) {
-    console.warn(`[Northlane Google Sheets Engine] Note on Google Sheet delivery:`, err.message);
+    console.warn(`[Northex Google Sheets Engine] Note on Google Sheet delivery:`, err.message);
   }
 }
 
@@ -318,13 +318,13 @@ async function dispatchToDiscord(lead) {
     const needs = lead.needs || "No additional comments provided.";
 
     const discordPayload = {
-      username: "Northlane Executive Desk",
+      username: "Northex Executive Desk",
       avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
       embeds: [
         {
           title: "🌟 NEW INCOMING CLIENT INQUIRY",
           description: "A high-intent prospect has submitted their strategic consultation request via the agency website.",
-          color: 0xFFD3AC, // Northlane Warm Luxury Gold
+          color: 0xFFD3AC, // Northex Warm Luxury Gold
           fields: [
             {
               name: "👤 Client Name",
@@ -363,7 +363,7 @@ async function dispatchToDiscord(lead) {
             }
           ],
           footer: {
-            text: "Northlane Performance Marketing OS • Automated Lead Dispatch",
+            text: "Northex Performance Marketing OS • Automated Lead Dispatch",
             icon_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png"
           },
           timestamp: new Date().toISOString()
@@ -377,9 +377,9 @@ async function dispatchToDiscord(lead) {
       body: JSON.stringify(discordPayload)
     });
 
-    console.log(`[Northlane Discord Engine] ✓ Lead dispatched to Discord channel (HTTP ${res.status})`);
+    console.log(`[Northex Discord Engine] ✓ Lead dispatched to Discord channel (HTTP ${res.status})`);
   } catch (err) {
-    console.warn(`[Northlane Discord Engine] Note on Discord webhook dispatch:`, err.message);
+    console.warn(`[Northex Discord Engine] Note on Discord webhook dispatch:`, err.message);
   }
 }
 

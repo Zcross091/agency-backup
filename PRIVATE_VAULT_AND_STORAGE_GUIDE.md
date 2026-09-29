@@ -1,6 +1,6 @@
-# Northlane Private Vault & Multi-Channel Lead Storage Architecture
+# Northex Private Vault & Multi-Channel Lead Storage Architecture
 
-Yes! Whenever a prospective client submits their details on the Northlane website, the system automatically triggers a **simultaneous dual-pipeline**:
+Yes! Whenever a prospective client submits their details on the Northex website, the system automatically triggers a **simultaneous dual-pipeline**:
 1. **Instant Direct Email Alert**: Sent immediately to **`Start.agency911@gmail.com`** with 1-click email response and phone call buttons.
 2. **Private Server Vault Archival**: Stored securely on the server in a protected directory (**`private_vault/`**) that is completely inaccessible to visitors on the public internet.
 
@@ -11,7 +11,7 @@ Yes! Whenever a prospective client submits their details on the Northlane websit
 On the server, leads are archived into multiple redundant, structured formats:
 
 ```
-Northlane Marketing Management System/
+Northex Marketing Management System/
 │
 ├── private_vault/                           <-- 🔒 PROTECTED FOLDER (HTTP 403 Forbidden to public)
 │   ├── all_leads.csv                        <-- 📊 Master Spreadsheet (Excel / Google Sheets ready)

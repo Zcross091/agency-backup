@@ -1,6 +1,6 @@
-# Northlane Performance Marketing Management System
+# Northex Performance Marketing Management System
 
-Northlane is a full-service performance marketing and customer acquisition platform engineered for local businesses, artisanal bakeries, and retail brands.
+Northex is a full-service performance marketing and customer acquisition platform engineered for local businesses, artisanal bakeries, and retail brands.
 
 ## 🚀 Key Features
 - **Client-Centric Frontend**: Modern dark-luxury design system (`#FFD3AC` cream accents) showcasing hyper-local Meta ads, automated retention systems, and proven client case studies.
@@ -48,4 +48,4 @@ Northlane is a full-service performance marketing and customer acquisition platf
 - [Custom Email & Domain Setup Guide](CUSTOM_EMAIL_AND_DOMAIN_GUIDE.md)
 
 ## 🔒 License
-Proprietary — All rights reserved © 2026 Northlane Marketing & Advertising Agency.
+Proprietary — All rights reserved © 2026 Northex Marketing & Advertising Agency.

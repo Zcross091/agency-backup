@@ -1,5 +1,5 @@
 /**
- * NORTHLANE INTERACTIVE LOGIC & LEAD PIPELINE
+ * NORTHEX INTERACTIVE LOGIC & LEAD PIPELINE
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -185,9 +185,9 @@ function initContactForm() {
 
   function saveLeadOffline(lead) {
     try {
-      const existing = JSON.parse(localStorage.getItem("northlane_leads") || "[]");
+      const existing = JSON.parse(localStorage.getItem("northex_leads") || localStorage.getItem("northlane_leads") || "[]");
       existing.push(lead);
-      localStorage.setItem("northlane_leads", JSON.stringify(existing));
+      localStorage.setItem("northex_leads", JSON.stringify(existing));
     } catch (_) {}
   }
 }
