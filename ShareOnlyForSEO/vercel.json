@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "headers": [
     {
       "source": "/(.*)",
@@ -10,7 +11,7 @@
       ]
     },
     {
-      "source": "/(favicon\\.(ico|png|svg)|assets/favicon-(.*)\\.png|assets/northex_(.*)|assets/apple-touch-icon\\.png)",
+      "source": "/assets/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
