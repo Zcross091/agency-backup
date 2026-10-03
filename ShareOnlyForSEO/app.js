@@ -139,7 +139,7 @@ function initContactForm() {
         fetch(GOOGLE_SHEET_WEBHOOK, {
           method: "POST",
           mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "text/plain" },
           body: JSON.stringify(payload)
         }).catch(err => console.warn("Google Sheet direct post note:", err));
       } catch (err) {
