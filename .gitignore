@@ -1,6 +1,6 @@
 # Dependencies
 node_modules/
-
+testing/
 # Secrets & Environment Variables (DO NOT COMMIT)
 .env
 .env.local
