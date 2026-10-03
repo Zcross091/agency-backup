@@ -130,7 +130,7 @@ function initContactForm() {
     statusBox.className = "form-status";
     statusBox.style.display = "none";
 
-    const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbxe4x-G-R8NKTEsgEdlt-qFzMEst0eDn03zs93qUtq-fnjdbsCCMo_5-i7qXj_8_N9Zig/exec";
+    const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbyHH_Am5aFpsYSKPpzwveQZTi95rk0nJmy3g061ACN_SRgqGOGw63MEwj6vVWPQ10icdg/exec";
 
     // 1. Direct Webhook Dispatch (Ensures delivery on Live Server, Vercel, or localhost)
     if (GOOGLE_SHEET_WEBHOOK) {
