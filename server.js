@@ -201,7 +201,7 @@ const server = http.createServer(async (req, res) => {
             from: `"Northex Lead Intake" <${AGENCY_EMAIL}>`,
             to: AGENCY_EMAIL,
             replyTo: email,
-            subject: `🔥 NEW CLIENT INQUIRY: ${business || name} (${contact})`,
+            subject: `[Northex Lead Intake] ${business ? business + " - " : ""}${name || "New Prospect"} (${contact})`,
             html: emailHtml
           }).then((info) => {
             console.log(`[Northex Lead Engine] Email sent successfully to ${AGENCY_EMAIL} (MsgId: ${info.messageId})`);
@@ -210,7 +210,7 @@ const server = http.createServer(async (req, res) => {
           });
         }
 
-        // 3. Sync lead to Google Sheet (Temp - Google Sheets: 1rYlHBcx0tvh0EbvB_JLuprSJx3HdqABmGsHP1JRH8zw)
+        // 3. Sync lead to Google Sheet (Target Sheet: 1a8Tlbr5oCARbBO_Ial2s1IZACPZCQbxV4esPK_vLT_Q)
         if (GOOGLE_SHEET_WEBHOOK_URL) {
           syncToGoogleSheet(leadRecord);
         } else {
