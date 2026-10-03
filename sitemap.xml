@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.northexmarketing.com/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.northexmarketing.com/assets/northex_logo_master.jpg</image:loc>
+      <image:title>Northex Performance Marketing Agency</image:title>
+      <image:caption>Full-Service Meta &amp; Google Ads customer acquisition agency</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.northexmarketing.com/assets/northex_nx_square.png</image:loc>
+      <image:title>Northex Brand Emblem</image:title>
+      <image:caption>Northex Luxury Gold NX Squircle Emblem</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://northexmarketing.com/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>

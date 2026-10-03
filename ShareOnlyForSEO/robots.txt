@@ -4,12 +4,21 @@ Allow: /favicon.ico
 Allow: /favicon.png
 Allow: /favicon.svg
 Allow: /assets/
+Allow: /favicon-*.png
+Allow: /apple-touch-icon.png
 Disallow: /api/
 
+User-agent: Googlebot
+Allow: /
+
 User-agent: Googlebot-Image
-Allow: /favicon.ico
-Allow: /favicon.png
-Allow: /favicon.svg
-Allow: /assets/
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
 
 Sitemap: https://www.northexmarketing.com/sitemap.xml
+Sitemap: https://northexmarketing.com/sitemap.xml

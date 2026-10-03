@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initModalHandling();
   initContactForm();
   initSmoothScroll();
+  initFaqAccordion();
 });
 
 /* --------------------------------------------------------------------------
@@ -213,6 +214,24 @@ function initSmoothScroll() {
         if (nameField) {
           setTimeout(() => nameField.focus(), 600);
         }
+      }
+    });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   7. Interactive FAQ Accordion
+   -------------------------------------------------------------------------- */
+function initFaqAccordion() {
+  const cards = document.querySelectorAll(".faq-card");
+  cards.forEach(card => {
+    const question = card.querySelector(".faq-question");
+    if (!question) return;
+    question.addEventListener("click", () => {
+      const isOpen = card.classList.contains("active");
+      cards.forEach(c => c.classList.remove("active"));
+      if (!isOpen) {
+        card.classList.add("active");
       }
     });
   });
