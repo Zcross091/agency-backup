@@ -109,9 +109,9 @@ function initContactForm() {
     e.preventDefault();
 
     const formData = new FormData(form);
-    const countryCode = formData.get("countryCode") || "+91";
+    const countryCode = (formData.get("countryCode") || "").trim();
     let rawContact = (formData.get("contact") || "").trim();
-    const fullContact = rawContact.startsWith("+") ? rawContact : `${countryCode} ${rawContact}`;
+    const fullContact = rawContact.startsWith("+") ? rawContact : (countryCode ? `${countryCode} ${rawContact}` : rawContact);
 
     const payload = {
       name: formData.get("name"),
