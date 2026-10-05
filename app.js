@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
   initSmoothScroll();
   initFaqAccordion();
+  initLegalTabs();
 });
 
 /* --------------------------------------------------------------------------
@@ -235,4 +236,44 @@ function initFaqAccordion() {
       }
     });
   });
+}
+
+/* --------------------------------------------------------------------------
+   8. Legal & Policy Tabs (Terms & Conditions / Privacy Policy)
+   -------------------------------------------------------------------------- */
+function initLegalTabs() {
+  const tabTerms = document.getElementById("tabBtnTerms");
+  const tabPrivacy = document.getElementById("tabBtnPrivacy");
+  const panelTerms = document.getElementById("legalPanelTerms");
+  const panelPrivacy = document.getElementById("legalPanelPrivacy");
+
+  if (!tabTerms || !tabPrivacy || !panelTerms || !panelPrivacy) return;
+
+  window.switchLegalTab = function(tabName) {
+    if (tabName === "privacy") {
+      tabPrivacy.classList.add("active");
+      tabTerms.classList.remove("active");
+      panelPrivacy.style.display = "block";
+      panelTerms.style.display = "none";
+    } else {
+      tabTerms.classList.add("active");
+      tabPrivacy.classList.remove("active");
+      panelTerms.style.display = "block";
+      panelPrivacy.style.display = "none";
+    }
+  };
+
+  tabTerms.addEventListener("click", () => window.switchLegalTab("terms"));
+  tabPrivacy.addEventListener("click", () => window.switchLegalTab("privacy"));
+
+  function checkHash() {
+    if (window.location.hash === "#privacy") {
+      window.switchLegalTab("privacy");
+    } else if (window.location.hash === "#terms" || window.location.hash === "#legal") {
+      window.switchLegalTab("terms");
+    }
+  }
+
+  window.addEventListener("hashchange", checkHash);
+  checkHash();
 }
