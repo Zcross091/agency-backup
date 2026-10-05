@@ -118,7 +118,7 @@ function initContactForm() {
       phone: fullContact,
       email: formData.get("email"),
       business: formData.get("business"),
-      country: formData.get("country") || "India",
+      country: formData.get("country") || "",
       needs: formData.get("needs"),
       submittedAt: new Date().toISOString()
     };
