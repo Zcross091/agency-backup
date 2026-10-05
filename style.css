@@ -2028,6 +2028,12 @@ h1, h2, h3, .brand-name {
   position: relative;
 }
 
+.legal-page-main {
+  padding: 140px 0 80px;
+  position: relative;
+  z-index: 1;
+}
+
 .legal-nav-tabs {
   display: flex;
   justify-content: center;
@@ -2225,6 +2231,9 @@ h1, h2, h3, .brand-name {
 @media (max-width: 768px) {
   .legal-section {
     padding: 60px 0;
+  }
+  .legal-page-main {
+    padding: 95px 0 45px;
   }
   .legal-card {
     padding: 28px 20px;
