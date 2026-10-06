@@ -1,5 +1,12 @@
 {
+  "outputDirectory": ".",
   "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/email/:match*",
+      "destination": "/public/email/:match*"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
