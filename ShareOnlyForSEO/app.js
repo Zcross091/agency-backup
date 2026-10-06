@@ -37,6 +37,7 @@ function initMobileMenu() {
 function initModalHandling() {
   const modal = document.getElementById("consultationModal");
   const openAuditBtnNav = document.getElementById("openAuditBtnNav");
+  const openAuditBtnTeam = document.getElementById("openAuditBtnTeam");
   const closeBtn = document.getElementById("modalCloseBtn");
   const jumpBtn = document.getElementById("modalScrollToForm");
 
@@ -51,6 +52,7 @@ function initModalHandling() {
   }
 
   if (openAuditBtnNav) openAuditBtnNav.addEventListener("click", openModal);
+  if (openAuditBtnTeam) openAuditBtnTeam.addEventListener("click", openModal);
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
 
   modal.addEventListener("click", (e) => {

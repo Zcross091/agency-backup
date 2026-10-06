@@ -1025,6 +1025,272 @@ h1, h2, h3, .brand-name {
   line-height: 1.5;
 }
 
+/* ==========================================================================
+   Founding Team & Leadership Section: Direct Founder Involvement
+   ========================================================================== */
+.team-section {
+  position: relative;
+  background: linear-gradient(180deg, rgba(11, 8, 6, 0.4) 0%, rgba(19, 14, 10, 0.7) 50%, rgba(11, 8, 6, 0.4) 100%);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-bottom: 36px;
+}
+
+.founder-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 36px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-card);
+}
+
+.founder-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-cream), transparent);
+  opacity: 0;
+  transition: var(--transition-smooth);
+}
+
+.founder-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 211, 172, 0.45);
+  box-shadow: 0 20px 40px -15px rgba(255, 211, 172, 0.18);
+  background: var(--bg-card-hover);
+}
+
+.founder-card:hover::before {
+  opacity: 1;
+}
+
+/* Circular Avatar Wrap & Luxury Glowing Rim */
+.founder-avatar-wrap {
+  position: relative;
+  width: 144px;
+  height: 144px;
+  margin: 0 auto 22px;
+}
+
+.founder-avatar-ring {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, rgba(255, 211, 172, 0.8) 0%, rgba(232, 180, 134, 0.25) 50%, rgba(255, 211, 172, 0.7) 100%);
+  box-shadow: 0 0 26px rgba(255, 211, 172, 0.22), inset 0 0 15px rgba(0, 0, 0, 0.6);
+  transition: var(--transition-smooth);
+}
+
+.founder-card:hover .founder-avatar-ring {
+  background: linear-gradient(135deg, #FFF4EA 0%, var(--accent-cream) 50%, #D49B6A 100%);
+  box-shadow: 0 0 34px rgba(255, 211, 172, 0.5);
+  transform: scale(1.03);
+}
+
+.founder-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: #0B0806;
+}
+
+.founder-avatar-img.placeholder-img {
+  background: #130E0A;
+}
+
+.founder-pulse-dot {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  width: 14px;
+  height: 14px;
+  background: #10B981;
+  border: 2.5px solid var(--bg-surface);
+  border-radius: 50%;
+  box-shadow: 0 0 10px #10B981;
+}
+
+.founder-meta {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.founder-name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.founder-role-badge {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-cream);
+  background: var(--accent-cream-soft);
+  border: 1px solid rgba(255, 211, 172, 0.22);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: 16px;
+}
+
+.founder-bio {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.founder-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.founder-tag {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  background: rgba(255, 211, 172, 0.05);
+  border: 1px solid rgba(255, 211, 172, 0.1);
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-smooth);
+}
+
+.founder-card:hover .founder-tag {
+  color: var(--text-main);
+  border-color: rgba(255, 211, 172, 0.25);
+  background: rgba(255, 211, 172, 0.08);
+}
+
+/* Promise Banner under Team Grid */
+.founder-promise-banner {
+  background: rgba(26, 20, 15, 0.65);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 24px 30px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  justify-content: space-between;
+}
+
+.founder-promise-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: var(--accent-cream-soft);
+  border: 1px solid rgba(255, 211, 172, 0.3);
+  color: var(--accent-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.founder-promise-content {
+  flex-grow: 1;
+}
+
+.founder-promise-content h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.founder-promise-content p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* Contact Section Founders Cluster */
+.founders-contact-cluster {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(26, 20, 15, 0.75);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(8px);
+}
+
+.cluster-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.cluster-img {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bg-main);
+  margin-left: -12px;
+  background: #0B0806;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: var(--transition-smooth);
+}
+
+.cluster-img:first-child {
+  margin-left: 0;
+}
+
+.cluster-img:hover {
+  transform: translateY(-3px) scale(1.1);
+  z-index: 2;
+  border-color: var(--accent-cream);
+}
+
+.cluster-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cluster-info strong {
+  font-size: 0.92rem;
+  color: var(--text-main);
+  margin-bottom: 2px;
+}
+
+.cluster-info span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
 /* Strategic Contact & Intake Section */
 .contact-grid {
   display: grid;
@@ -1767,6 +2033,62 @@ h1, h2, h3, .brand-name {
   .process-card p {
     font-size: 0.8rem;
     line-height: 1.38;
+  }
+
+  /* Controlled Team & Founders Section on Mobile */
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .founder-card {
+    padding: 24px 18px 20px;
+    border-radius: var(--radius-md);
+  }
+  .founder-avatar-wrap {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 16px;
+  }
+  .founder-name {
+    font-size: 1.2rem;
+  }
+  .founder-role-badge {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    margin-bottom: 12px;
+  }
+  .founder-bio {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+  .founder-promise-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 18px 16px;
+    gap: 14px;
+  }
+  .founder-promise-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    margin: 0 auto;
+  }
+  .founder-promise-content h4 {
+    font-size: 0.95rem;
+  }
+  .founder-promise-content p {
+    font-size: 0.8rem;
+  }
+  .founders-contact-cluster {
+    flex-direction: column;
+    text-align: center;
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .cluster-avatars {
+    justify-content: center;
   }
 
   /* Controlled Strategic Contact & Intake Section */
