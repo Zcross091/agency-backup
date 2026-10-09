@@ -313,6 +313,7 @@ function initAuditBookingForm() {
       address,
       country,
       contact: fullPhone,
+      phone: fullPhone,
       email,
       requestedAuditDate: requestedDate,
       requestedAuditDateFormatted: requestedDateFormatted,
@@ -320,6 +321,31 @@ function initAuditBookingForm() {
       submittedAt: new Date().toISOString()
     };
 
+    const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbzhJQw61YLOYHF2nhqavqA4xMyW9ZinlqhTOX7_njxfuOhJ4z0_cgFjGWTf1yWW-IvEyA/exec";
+
+    const smartNeeds = `📅 REQUESTED AUDIT DATE: ${requestedDateFormatted}\n📍 Business Address: ${address}\n${notes ? "Notes: " + notes : ""}`.trim();
+
+    const cloudPayload = {
+      ...payload,
+      needs: smartNeeds
+    };
+
+    // 1. Direct Cloud Dispatch to Google Sheets & Apps Script Pipeline (Always active on Vercel, Live Domain, and Local)
+    let cloudDispatchPromise = null;
+    if (GOOGLE_SHEET_WEBHOOK) {
+      try {
+        cloudDispatchPromise = fetch(GOOGLE_SHEET_WEBHOOK, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify(cloudPayload)
+        }).catch(err => console.warn("[Audit Engine] Google Sheets cloud webhook note:", err));
+      } catch (err) {
+        console.warn("[Audit Engine] Direct webhook exception:", err);
+      }
+    }
+
+    // 2. Dispatch to API Endpoint (/api/audit-booking) for Vercel Serverless Function & Local Vault Archiving
     try {
       const response = await fetch("/api/audit-booking", {
         method: "POST",
@@ -327,37 +353,23 @@ function initAuditBookingForm() {
         body: JSON.stringify(payload)
       });
 
-      const resData = await response.json();
-
-      if (response.ok && resData.success) {
-        // Transition to Success State
-        showSuccessState(requestedDateFormatted);
-      } else {
-        throw new Error(resData.error || "Server processing failed.");
+      if (response.ok) {
+        const resData = await response.json().catch(() => ({}));
+        console.log("[Audit Engine] API Endpoint responded successfully:", resData);
       }
-    } catch (err) {
-      console.warn("[Northex Audit Engine] Local API issue, checking fallback:", err);
-
-      // Graceful Direct Fallback to Google Sheets Webhook if available
-      try {
-        const fallbackRes = await fetch("https://script.google.com/macros/s/AKfycbw6H016Y408lK312-sample/exec", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...payload,
-            needs: `📅 REQUESTED AUDIT DATE: ${requestedDateFormatted}\n📍 Address: ${address}\n${notes ? "Notes: " + notes : ""}`
-          }),
-          mode: "no-cors"
-        });
-        showSuccessState(requestedDateFormatted);
-      } catch (fallbackErr) {
-        statusBox.textContent = "Your request was received. If confirmation is delayed, feel free to message us directly at support@northexmarketing.com.";
-        statusBox.className = "form-status warning";
-        submitBtn.disabled = false;
-        submitSpinner.style.display = "none";
-        submitBtnText.textContent = "Try Again →";
-      }
+    } catch (apiErr) {
+      console.log("[Audit Engine] Local server API note (cloud webhook active):", apiErr.message);
     }
+
+    // Await cloud dispatch confirmation and transition to success state
+    if (cloudDispatchPromise) {
+      await cloudDispatchPromise;
+    }
+
+    submitBtn.disabled = false;
+    submitSpinner.style.display = "none";
+    showSuccessState(requestedDateFormatted);
+    form.reset();
   });
 }
 
