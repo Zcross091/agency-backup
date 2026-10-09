@@ -236,6 +236,209 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // API Endpoint: /api/audit-booking (Dedicated Growth Audit & Calendar Booking)
+  if (req.url === "/api/audit-booking" && req.method === "POST") {
+    let body = "";
+    req.on("data", chunk => { body += chunk; });
+    req.on("end", async () => {
+      try {
+        const data = JSON.parse(body || "{}");
+        const name = (data.name || "").trim();
+        const contact = (data.contact || data.phone || "").trim();
+        const email = (data.email || "").trim();
+        const business = (data.business || "").trim();
+        const address = (data.address || "").trim();
+        const country = (data.country || "India").trim();
+        const requestedAuditDate = (data.requestedAuditDate || "").trim();
+        const requestedAuditDateFormatted = (data.requestedAuditDateFormatted || requestedAuditDate).trim();
+        const notes = (data.notes || "").trim();
+
+        if (!name || !contact || !email || !requestedAuditDate) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: false, error: "Name, contact, email, and requested meeting date are required." }));
+          return;
+        }
+
+        const cleanPhone = contact.replace(/^'+/, "");
+        const cleanPhoneDigits = cleanPhone.replace(/[^0-9+]/g, "");
+
+        // 1. Secure Multi-Tier Private Vault Storage
+        const vaultDir = path.join(__dirname, "private_vault");
+        const leadsVaultDir = path.join(vaultDir, "leads");
+        if (!fs.existsSync(leadsVaultDir)) {
+          fs.mkdirSync(leadsVaultDir, { recursive: true });
+        }
+
+        const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+        const safeSlug = (name || "audit").replace(/[^a-zA-Z0-9_-]/g, "_").toLowerCase();
+        const individualLeadFile = path.join(leadsVaultDir, `audit_${timestamp}_${safeSlug}.json`);
+
+        const leadRecord = {
+          type: "audit_booking",
+          name,
+          business,
+          address,
+          country,
+          contact: cleanPhone,
+          email,
+          requestedAuditDate,
+          requestedAuditDateFormatted,
+          notes,
+          receivedAt: new Date().toISOString()
+        };
+
+        // 1A. Save individual lead file
+        fs.writeFileSync(individualLeadFile, JSON.stringify(leadRecord, null, 2));
+
+        // 1B. Save/Append to Master CSV
+        const csvFile = path.join(vaultDir, "all_leads.csv");
+        const csvHeader = "Timestamp,Type,Name,Phone,Email,Business,Address,Country,RequestedDate,Needs\n";
+        const cleanField = str => `"${String(str || "").replace(/"/g, '""')}"`;
+        const csvRow = [
+          cleanField(leadRecord.receivedAt),
+          cleanField("audit_booking"),
+          cleanField(name),
+          cleanField(cleanPhone),
+          cleanField(email),
+          cleanField(business || "N/A"),
+          cleanField(address || "N/A"),
+          cleanField(country || "India"),
+          cleanField(requestedAuditDateFormatted || requestedAuditDate),
+          cleanField(notes || "")
+        ].join(",") + "\n";
+
+        if (!fs.existsSync(csvFile)) {
+          fs.writeFileSync(csvFile, csvHeader + csvRow, "utf-8");
+        } else {
+          fs.appendFileSync(csvFile, csvRow, "utf-8");
+        }
+
+        // 1C. Append to Master JSON ledger
+        const ledgerFile = path.join(vaultDir, "leads_ledger.json");
+        let ledger = [];
+        if (fs.existsSync(ledgerFile)) {
+          try {
+            ledger = JSON.parse(fs.readFileSync(ledgerFile, "utf-8") || "[]");
+          } catch (_) { ledger = []; }
+        }
+        ledger.unshift(leadRecord);
+        fs.writeFileSync(ledgerFile, JSON.stringify(ledger, null, 2));
+
+        // 1D. Keep root leads.json in sync
+        const rootLeadsFile = path.join(__dirname, "leads.json");
+        fs.writeFileSync(rootLeadsFile, JSON.stringify(ledger, null, 2));
+
+        console.log(`[Northex Private Vault] Audit booking archived: ${individualLeadFile}`);
+
+        // 2. Dispatch automated email alert with Gold Date Banner
+        if (transporter) {
+          const emailHtml = `
+            <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 620px; margin: 0 auto; background: #0B0806; color: #FAF5EF; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 211, 172, 0.25);">
+              <div style="background: linear-gradient(135deg, #FFD3AC, #E8B486); padding: 24px 30px;">
+                <h1 style="margin: 0; color: #0B0806; font-size: 21px; font-weight: 800; letter-spacing: 0.04em;">NORTHEX • NEW GROWTH AUDIT REQUEST</h1>
+                <p style="margin: 4px 0 0; color: #1E1712; font-size: 13px; font-weight: 600;">1-on-1 Consultation Date Selected by Prospect</p>
+              </div>
+
+              <div style="padding: 28px 30px;">
+                <div style="background: rgba(255, 211, 172, 0.1); border: 1px solid #FFD3AC; border-radius: 12px; padding: 18px 20px; text-align: center; margin-bottom: 24px;">
+                  <span style="font-size: 12px; font-weight: 700; color: #E8B486; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 6px;">Requested Consultation Date</span>
+                  <div style="font-size: 20px; font-weight: 800; color: #FFD3AC;">🗓️ ${requestedAuditDateFormatted || requestedAuditDate}</div>
+                  <span style="font-size: 12px; color: #CBBDB0; display: block; margin-top: 6px;">Action Required: Reach out to client to confirm their preferred meeting time.</span>
+                </div>
+
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; background: #130E0A; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 211, 172, 0.1);">
+                  <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <td style="padding: 12px 18px; font-size: 13px; color: #8E7E70; font-weight: bold; width: 140px;">Client Name</td>
+                    <td style="padding: 12px 18px; font-size: 14px; color: #FAF5EF; font-weight: 600;">${name}</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <td style="padding: 12px 18px; font-size: 13px; color: #8E7E70; font-weight: bold;">Business Name</td>
+                    <td style="padding: 12px 18px; font-size: 14px; color: #FFD3AC; font-weight: 600;">${business || "N/A"}</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <td style="padding: 12px 18px; font-size: 13px; color: #8E7E70; font-weight: bold;">Business Address</td>
+                    <td style="padding: 12px 18px; font-size: 14px; color: #FAF5EF;">${address || "N/A"}</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <td style="padding: 12px 18px; font-size: 13px; color: #8E7E70; font-weight: bold;">Phone / WhatsApp</td>
+                    <td style="padding: 12px 18px; font-size: 14px; color: #10B981; font-weight: bold;"><a href="tel:${cleanPhoneDigits}" style="color: #10B981; text-decoration: none;">${cleanPhone}</a></td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <td style="padding: 12px 18px; font-size: 13px; color: #8E7E70; font-weight: bold;">Email Address</td>
+                    <td style="padding: 12px 18px; font-size: 14px; color: #FAF5EF;"><a href="mailto:${email}" style="color: #FFD3AC; text-decoration: none;">${email}</a></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 18px; font-size: 13px; color: #8E7E70; font-weight: bold;">Country</td>
+                    <td style="padding: 12px 18px; font-size: 14px; color: #CBBDB0;">${country || "India"}</td>
+                  </tr>
+                </table>
+
+                ${notes ? `
+                <div style="background: #130E0A; border-left: 3px solid #FFD3AC; padding: 14px 18px; border-radius: 6px; margin-bottom: 24px;">
+                  <span style="display: block; font-size: 11px; font-weight: 700; color: #FFD3AC; text-transform: uppercase; margin-bottom: 4px;">Client Goals & Notes:</span>
+                  <p style="margin: 0; font-size: 14px; color: #E2E8F0; line-height: 1.5; white-space: pre-wrap;">${notes}</p>
+                </div>` : ''}
+
+                <div style="text-align: center; margin-top: 25px;">
+                  <a href="mailto:${email}?subject=Confirming%20Your%20Northex%20Growth%20Audit%20on%20${encodeURIComponent(requestedAuditDateFormatted || requestedAuditDate)}" style="display: inline-block; background: #FFD3AC; color: #0B0806; padding: 12px 22px; border-radius: 999px; font-weight: bold; font-size: 14px; text-decoration: none; margin-right: 8px;">
+                    ✉️ Reply to Confirm Time
+                  </a>
+                  <a href="https://wa.me/${cleanPhoneDigits.replace(/^\+/, '')}" style="display: inline-block; background: #10B981; color: #FFFFFF; padding: 12px 20px; border-radius: 999px; font-weight: bold; font-size: 14px; text-decoration: none; margin-right: 8px;">
+                    💬 WhatsApp
+                  </a>
+                  <a href="tel:${cleanPhoneDigits}" style="display: inline-block; background: #241C15; color: #FAF5EF; padding: 12px 18px; border-radius: 999px; font-weight: bold; font-size: 14px; text-decoration: none;">
+                    📞 Call
+                  </a>
+                </div>
+              </div>
+
+              <div style="background: #060403; padding: 16px 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); font-size: 12px; color: #8E7E70;">
+                Northex Performance Marketing OS • Automated Lead Dispatch
+              </div>
+            </div>
+          `;
+
+          transporter.sendMail({
+            from: `"Northex Audit Desk" <${AGENCY_EMAIL}>`,
+            to: AGENCY_EMAIL,
+            replyTo: email,
+            subject: `📅 [GROWTH AUDIT REQUEST] ${business ? business + " - " : ""}${name} for ${requestedAuditDateFormatted || requestedAuditDate}`,
+            html: emailHtml
+          }).then((info) => {
+            console.log(`[Northex Audit Engine] Email sent successfully to ${AGENCY_EMAIL} (MsgId: ${info.messageId})`);
+          }).catch((err) => {
+            console.warn(`[Northex Audit Engine] Note on email delivery to ${AGENCY_EMAIL}:`, err.message);
+          });
+        }
+
+        // 3. Sync to Google Sheets
+        if (GOOGLE_SHEET_WEBHOOK_URL) {
+          const smartNeeds = `📅 REQUESTED AUDIT DATE: ${requestedAuditDateFormatted || requestedAuditDate}\n📍 Address: ${address || "N/A"}${notes ? "\nNotes: " + notes : ""}`.trim();
+          syncToGoogleSheet({
+            ...leadRecord,
+            needs: smartNeeds
+          });
+        }
+
+        // 4. Dispatch VIP Embed to Discord
+        if (DISCORD_WEBHOOK_URL) {
+          dispatchAuditBookingToDiscord(leadRecord);
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({
+          success: true,
+          message: `Growth Audit request confirmed for ${requestedAuditDateFormatted || requestedAuditDate}. Our team will contact you to confirm the consultation time.`
+        }));
+      } catch (err) {
+        console.error("[Northex Server] Error processing /api/audit-booking:", err);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: false, error: "Internal processing error." }));
+      }
+    });
+    return;
+  }
+
   // Static File Serving
   let reqPath = req.url === "/" ? "/index.html" : req.url.split("?")[0];
 
@@ -254,6 +457,14 @@ const server = http.createServer(async (req, res) => {
   }
 
   let filePath = path.join(__dirname, reqPath);
+
+  // Clean URLs support: if requesting /audit or /privacy without .html, serve corresponding .html
+  if (!path.extname(filePath)) {
+    const htmlCandidate = filePath + ".html";
+    if (fs.existsSync(htmlCandidate) && fs.statSync(htmlCandidate).isFile()) {
+      filePath = htmlCandidate;
+    }
+  }
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
@@ -380,6 +591,100 @@ async function dispatchToDiscord(lead) {
     console.log(`[Northex Discord Engine] ✓ Lead dispatched to Discord channel (HTTP ${res.status})`);
   } catch (err) {
     console.warn(`[Northex Discord Engine] Note on Discord webhook dispatch:`, err.message);
+  }
+}
+
+// Helper: Dispatch ultra-premium styled embed alert for Growth Audit Booking to Discord
+async function dispatchAuditBookingToDiscord(lead) {
+  try {
+    const rawContact = String(lead.contact || lead.phone || "").trim().replace(/^'+/, "");
+    const cleanDigits = rawContact.replace(/[^0-9+]/g, "");
+    const name = lead.name || "Valued Prospect";
+    const business = lead.business || "N/A";
+    const email = lead.email || "N/A";
+    const address = lead.address || "N/A";
+    const country = lead.country || "India";
+    const dateStr = lead.requestedAuditDateFormatted || lead.requestedAuditDate || "Unspecified";
+    const notes = lead.notes || "No additional comments provided.";
+
+    const discordPayload = {
+      username: "Northex Audit Desk",
+      avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
+      embeds: [
+        {
+          title: "🗓️ NEW FREE GROWTH AUDIT BOOKING REQUEST",
+          description: `A prospect has selected a preferred date for their 1-on-1 Free Growth Audit.`,
+          color: 0xFFD3AC, // Northex Warm Luxury Gold
+          fields: [
+            {
+              name: "📅 Requested Meeting Date",
+              value: `**${dateStr}**`,
+              inline: true
+            },
+            {
+              name: "👤 Client Name",
+              value: `**${name}**`,
+              inline: true
+            },
+            {
+              name: "💼 Business / Brand",
+              value: `**${business}**`,
+              inline: true
+            },
+            {
+              name: "📍 Business Address / HQ",
+              value: `\`${address}\``,
+              inline: true
+            },
+            {
+              name: "🌍 Country",
+              value: `\`${country}\``,
+              inline: true
+            },
+            {
+              name: "📞 Phone / WhatsApp",
+              value: rawContact ? `[\`${rawContact}\`](tel:${cleanDigits})` : "*Not provided*",
+              inline: true
+            },
+            {
+              name: "✉️ Email Address",
+              value: email ? `[${email}](mailto:${email})` : "*Not provided*",
+              inline: true
+            },
+            {
+              name: "⏰ Submitted At",
+              value: `<t:${Math.floor(Date.now() / 1000)}:R>`,
+              inline: true
+            },
+            {
+              name: "🎯 Goals & Growth Notes",
+              value: `\`\`\`fix\n${notes.slice(0, 1000)}\n\`\`\``,
+              inline: false
+            },
+            {
+              name: "⚡ Action Required",
+              value: `Reach out to client via WhatsApp/Email to schedule the consultation time slot on **${dateStr}**.`,
+              inline: false
+            }
+          ],
+          footer: {
+            text: "Northex Growth Audit Engine • Automated Dispatch",
+            icon_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png"
+          },
+          timestamp: new Date().toISOString()
+        }
+      ]
+    };
+
+    const res = await fetch(DISCORD_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(discordPayload)
+    });
+
+    console.log(`[Northex Discord Engine] ✓ Audit booking dispatched to Discord channel (HTTP ${res.status})`);
+  } catch (err) {
+    console.warn(`[Northex Discord Engine] Note on Discord audit dispatch:`, err.message);
   }
 }
 

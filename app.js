@@ -51,8 +51,6 @@ function initModalHandling() {
     modal.classList.remove("open");
   }
 
-  if (openAuditBtnNav) openAuditBtnNav.addEventListener("click", openModal);
-  if (openAuditBtnTeam) openAuditBtnTeam.addEventListener("click", openModal);
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
 
   modal.addEventListener("click", (e) => {
@@ -202,7 +200,6 @@ function initContactForm() {
 function initSmoothScroll() {
   const contactTriggers = [
     document.getElementById("openContactBtnNav"),
-    document.getElementById("openContactBtnHero"),
     document.getElementById("openContactBtnCalc"),
     document.getElementById("openContactBtnMobile")
   ];
