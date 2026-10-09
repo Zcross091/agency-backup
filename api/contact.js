@@ -31,8 +31,27 @@ module.exports = async function handler(req, res) {
 
     const cleanDigits = contact.replace(/[^0-9+]/g, "");
 
-    // 1. Dispatch VIP Embed to Discord
-    if (DISCORD_WEBHOOK_URL) {
+    // 1. Dispatch to Google Sheets & Apps Script Pipeline
+    // (Google Apps Script automatically appends row to Sheet, sends Email alert, and dispatches embed to Discord)
+    let sheetSucceeded = false;
+    if (GOOGLE_SHEET_WEBHOOK_URL) {
+      try {
+        const sheetRes = await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+        if (sheetRes.ok) {
+          sheetSucceeded = true;
+        }
+      } catch (err) {
+        console.warn("Google Sheet webhook note:", err);
+      }
+    }
+
+    // 2. Direct Discord Fallback: Only send directly if Google Sheet webhook failed or is not configured
+    // This prevents duplicate messages in Discord (#support-needed)
+    if (!sheetSucceeded && DISCORD_WEBHOOK_URL) {
       const discordPayload = {
         username: "Northex Executive Desk",
         avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
@@ -51,7 +70,7 @@ module.exports = async function handler(req, res) {
               { name: "🎯 Goals & Business Requirements", value: `\`\`\`fix\n${(needs || "None specified").slice(0, 1000)}\n\`\`\``, inline: false }
             ],
             footer: {
-              text: "Northex Performance Marketing OS • Cloud Dispatch",
+              text: "Northex Performance Marketing OS • Fallback Cloud Dispatch",
               icon_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png"
             },
             timestamp: new Date().toISOString()
@@ -64,15 +83,6 @@ module.exports = async function handler(req, res) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(discordPayload)
       }).catch(err => console.warn("Discord dispatch note:", err));
-    }
-
-    // 2. Dispatch to Google Sheets
-    if (GOOGLE_SHEET_WEBHOOK_URL) {
-      await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      }).catch(err => console.warn("Google Sheet webhook note:", err));
     }
 
     return res.status(200).json({ success: true, message: "Inquiry processed successfully." });

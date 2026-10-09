@@ -80,7 +80,8 @@ module.exports = async function handler(req, res) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
-          needs: smartNeeds
+          needs: smartNeeds,
+          skipDiscord: true
         })
       }).catch(err => console.warn("Google Sheet webhook note:", err));
     }

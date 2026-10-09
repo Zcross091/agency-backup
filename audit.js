@@ -330,22 +330,9 @@ function initAuditBookingForm() {
       needs: smartNeeds
     };
 
-    // 1. Direct Cloud Dispatch to Google Sheets & Apps Script Pipeline (Always active on Vercel, Live Domain, and Local)
-    let cloudDispatchPromise = null;
-    if (GOOGLE_SHEET_WEBHOOK) {
-      try {
-        cloudDispatchPromise = fetch(GOOGLE_SHEET_WEBHOOK, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain" },
-          body: JSON.stringify(cloudPayload)
-        }).catch(err => console.warn("[Audit Engine] Google Sheets cloud webhook note:", err));
-      } catch (err) {
-        console.warn("[Audit Engine] Direct webhook exception:", err);
-      }
-    }
+    let apiSucceeded = false;
 
-    // 2. Dispatch to API Endpoint (/api/audit-booking) for Vercel Serverless Function & Local Vault Archiving
+    // 1. Primary Dispatch: Dispatch to API (/api/audit-booking) for single-point Discord & Google Sheets sync
     try {
       const response = await fetch("/api/audit-booking", {
         method: "POST",
@@ -354,23 +341,45 @@ function initAuditBookingForm() {
       });
 
       if (response.ok) {
-        const resData = await response.json().catch(() => ({}));
-        console.log("[Audit Engine] API Endpoint responded successfully:", resData);
+        apiSucceeded = true;
+        showSuccessState(requestedDateFormatted);
+        form.reset();
       }
     } catch (apiErr) {
-      console.log("[Audit Engine] Local server API note (cloud webhook active):", apiErr.message);
+      console.log("[Audit Engine] Primary API note:", apiErr.message);
     }
 
-    // Await cloud dispatch confirmation and transition to success state
-    if (cloudDispatchPromise) {
-      await cloudDispatchPromise;
+    // 2. Fail-Safe Fallback: Only call Google Sheets directly if the primary API was completely unreachable
+    if (!apiSucceeded && GOOGLE_SHEET_WEBHOOK) {
+      try {
+        await fetch(GOOGLE_SHEET_WEBHOOK, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify(cloudPayload)
+        });
+        showSuccessState(requestedDateFormatted);
+        form.reset();
+      } catch (fallbackErr) {
+        console.warn("[Audit Engine] Fallback webhook exception:", fallbackErr);
+        saveAuditLeadOffline(payload);
+        showSuccessState(requestedDateFormatted);
+        form.reset();
+      }
     }
 
     submitBtn.disabled = false;
     submitSpinner.style.display = "none";
-    showSuccessState(requestedDateFormatted);
-    form.reset();
+    submitBtnText.textContent = "Confirm Free Growth Audit";
   });
+}
+
+function saveAuditLeadOffline(lead) {
+  try {
+    const existing = JSON.parse(localStorage.getItem("northex_audit_leads") || "[]");
+    existing.push(lead);
+    localStorage.setItem("northex_audit_leads", JSON.stringify(existing));
+  } catch (_) {}
 }
 
 function showSuccessState(dateFormatted) {

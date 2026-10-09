@@ -110,40 +110,43 @@ function doPost(e) {
     }
 
     // 3. Dispatch Rich VIP Embed to Discord Channel (Channel 1546898866929016952)
-    try {
-      var discordWebhookUrl = "https://discord.com/api/webhooks/1546899444933333244/b7Yd7ViuySu23i9e_pITC01e24Wl6OyiPZKNqo4TTYDaSJ8fkGiUkKbFCtc2eLAa0Wh9";
-      var discordPayload = {
-        username: "Northex Executive Desk",
-        avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
-        embeds: [{
-          title: "🌟 NEW INCOMING CLIENT INQUIRY",
-          description: "A high-intent prospect has submitted their strategic consultation request via the agency website.",
-          color: 16765868, // #FFD3AC Warm Luxury Gold
-          fields: [
-            { name: "👤 Client Name", value: "**" + (name || "Valued Client") + "**", inline: true },
-            { name: "💼 Business / Brand", value: "**" + (business || "N/A") + "**", inline: true },
-            { name: "🌍 Country", value: country || "India", inline: true },
-            { name: "📞 Phone / WhatsApp", value: cleanPhone ? "**" + cleanPhone + "**" : "Not provided", inline: true },
-            { name: "✉️ Email Address", value: email || "Not provided", inline: true },
-            { name: "⏰ Submitted At", value: time, inline: true },
-            { name: "🎯 Goals & Business Requirements", value: needs ? ("> " + needs.split("\n").join("\n> ")) : "None specified", inline: false }
-          ],
-          footer: {
-            text: "Northex Performance Marketing OS • Automated Lead Dispatch",
-            icon_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png"
-          },
-          timestamp: new Date().toISOString()
-        }]
-      };
+    // Only dispatch generic inquiry if not already handled by dedicated Audit Desk dispatch
+    if (data.skipDiscord !== true && data.type !== "audit_booking") {
+      try {
+        var discordWebhookUrl = "https://discord.com/api/webhooks/1546899444933333244/b7Yd7ViuySu23i9e_pITC01e24Wl6OyiPZKNqo4TTYDaSJ8fkGiUkKbFCtc2eLAa0Wh9";
+        var discordPayload = {
+          username: "Northex Executive Desk",
+          avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
+          embeds: [{
+            title: "🌟 NEW INCOMING CLIENT INQUIRY",
+            description: "A high-intent prospect has submitted their strategic consultation request via the agency website.",
+            color: 16765868, // #FFD3AC Warm Luxury Gold
+            fields: [
+              { name: "👤 Client Name", value: "**" + (name || "Valued Client") + "**", inline: true },
+              { name: "💼 Business / Brand", value: "**" + (business || "N/A") + "**", inline: true },
+              { name: "🌍 Country", value: country || "India", inline: true },
+              { name: "📞 Phone / WhatsApp", value: cleanPhone ? "**" + cleanPhone + "**" : "Not provided", inline: true },
+              { name: "✉️ Email Address", value: email || "Not provided", inline: true },
+              { name: "⏰ Submitted At", value: time, inline: true },
+              { name: "🎯 Goals & Business Requirements", value: needs ? ("> " + needs.split("\n").join("\n> ")) : "None specified", inline: false }
+            ],
+            footer: {
+              text: "Northex Performance Marketing OS • Automated Lead Dispatch",
+              icon_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png"
+            },
+            timestamp: new Date().toISOString()
+          }]
+        };
 
-      UrlFetchApp.fetch(discordWebhookUrl, {
-        method: "post",
-        contentType: "application/json",
-        payload: JSON.stringify(discordPayload),
-        muteHttpExceptions: true
-      });
-    } catch (dcErr) {
-      Logger.log("Discord dispatch note: " + dcErr.toString());
+        UrlFetchApp.fetch(discordWebhookUrl, {
+          method: "post",
+          contentType: "application/json",
+          payload: JSON.stringify(discordPayload),
+          muteHttpExceptions: true
+        });
+      } catch (dcErr) {
+        Logger.log("Discord dispatch note: " + dcErr.toString());
+      }
     }
 
     return ContentService
