@@ -1118,18 +1118,6 @@ h1, h2, h3, .brand-name {
   background: #130E0A;
 }
 
-.founder-pulse-dot {
-  position: absolute;
-  bottom: 8px;
-  right: 12px;
-  width: 14px;
-  height: 14px;
-  background: #10B981;
-  border: 2.5px solid var(--bg-surface);
-  border-radius: 50%;
-  box-shadow: 0 0 10px #10B981;
-}
-
 .founder-meta {
   width: 100%;
   display: flex;
