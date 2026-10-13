@@ -33,6 +33,17 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.northexmarketing.com/audit</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.northexmarketing.com/assets/northex_logo_master.jpg</image:loc>
+      <image:title>Northex Growth Audit Booking Calendar</image:title>
+      <image:caption>Book a 1-on-1 Performance Marketing Audit with Northex Founders</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.northexmarketing.com/terms</loc>
     <lastmod>2026-10-05</lastmod>
     <changefreq>monthly</changefreq>
