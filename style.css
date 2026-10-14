@@ -984,17 +984,37 @@ h1, h2, h3, .brand-name {
   gap: 20px;
 }
 
+@media (min-width: 992px) {
+  .process-track {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 .process-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 28px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-smooth);
+}
+
+.process-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 211, 172, 0.35);
+  box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.5);
 }
 
 .process-card.highlight-card {
   border-color: rgba(255, 211, 172, 0.45);
   background: linear-gradient(180deg, rgba(255, 211, 172, 0.1) 0%, rgba(20, 15, 11, 0.85) 100%);
+}
+
+.process-card.highlight-card:hover {
+  border-color: var(--accent-cream);
+  box-shadow: 0 16px 36px -10px rgba(255, 211, 172, 0.2);
 }
 
 .step-badge {
