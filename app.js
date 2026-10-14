@@ -181,8 +181,8 @@ function initContactForm() {
     statusBox.style.display = "block";
     statusBox.innerHTML = `
       <strong>✓ Strategy Brief Dispatched!</strong><br>
-      Thank you, <b>${name}</b>. Your details for <b>${business}</b> have been securely dispatched to our leadership desk.<br>
-      Our team will review your business requirements and contact you via Email within 4 business hours.
+      Thank you, <b>${name}</b>. Your details for <b>${business}</b> have been sent directly to the founders.<br>
+      Our team will review your business requirements and contact you via Email within 1 business day.
     `;
   }
 

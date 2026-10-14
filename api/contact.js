@@ -53,7 +53,7 @@ module.exports = async function handler(req, res) {
     // This prevents duplicate messages in Discord (#support-needed)
     if (!sheetSucceeded && DISCORD_WEBHOOK_URL) {
       const discordPayload = {
-        username: "Northex Executive Desk",
+        username: "Northex Inquiries",
         avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
         embeds: [
           {

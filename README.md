@@ -7,7 +7,7 @@ Northex is a full-service performance marketing and customer acquisition platfor
 - **Dynamic Revenue Potential Calculator**: Interactive slider projecting monthly order volume, local reach, and gross revenue.
 - **Triple-Action Lead Pipeline**:
   1. **Private Vault**: Automatic local logging to `private_vault/` (`all_leads.csv` and individual JSON files) with HTTP 403 access security.
-  2. **Automated Executive Alerts**: Direct email notification to agency leadership desk.
+  2. **Automated Executive Alerts**: Direct email notification to agency founders.
   3. **Google Sheets Real-Time Sync**: Webhook integration with Google Apps Script to append leads live to your operational spreadsheet.
 - **Zero-WhatsApp Policy**: All customer communications streamlined via official email and scheduled strategy calls.
 - **Official Brand Favicon & Headers**: Custom SVG and multi-format favicons for all modern desktop and mobile browsers.

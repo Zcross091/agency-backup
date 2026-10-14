@@ -110,12 +110,12 @@ function doPost(e) {
     }
 
     // 3. Dispatch Rich VIP Embed to Discord Channel (Channel 1546898866929016952)
-    // Only dispatch generic inquiry if not already handled by dedicated Audit Desk dispatch
+    // Only dispatch generic inquiry if not already handled by dedicated Growth Audit dispatch
     if (data.skipDiscord !== true && data.type !== "audit_booking") {
       try {
         var discordWebhookUrl = "https://discord.com/api/webhooks/1546899444933333244/b7Yd7ViuySu23i9e_pITC01e24Wl6OyiPZKNqo4TTYDaSJ8fkGiUkKbFCtc2eLAa0Wh9";
         var discordPayload = {
-          username: "Northex Executive Desk",
+          username: "Northex Inquiries",
           avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
           embeds: [{
             title: "🌟 NEW INCOMING CLIENT INQUIRY",

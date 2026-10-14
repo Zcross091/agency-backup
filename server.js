@@ -399,7 +399,7 @@ const server = http.createServer(async (req, res) => {
           `;
 
           transporter.sendMail({
-            from: `"Northex Audit Desk" <${AGENCY_EMAIL}>`,
+            from: `"Northex Growth Audit" <${AGENCY_EMAIL}>`,
             to: AGENCY_EMAIL,
             replyTo: email,
             subject: `📅 [GROWTH AUDIT REQUEST] ${business ? business + " - " : ""}${name} for ${requestedAuditDateFormatted || requestedAuditDate}`,
@@ -529,7 +529,7 @@ async function dispatchToDiscord(lead) {
     const needs = lead.needs || "No additional comments provided.";
 
     const discordPayload = {
-      username: "Northex Executive Desk",
+      username: "Northex Inquiries",
       avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
       embeds: [
         {
@@ -608,7 +608,7 @@ async function dispatchAuditBookingToDiscord(lead) {
     const notes = lead.notes || "No additional comments provided.";
 
     const discordPayload = {
-      username: "Northex Audit Desk",
+      username: "Northex Growth Audit",
       avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
       embeds: [
         {

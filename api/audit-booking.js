@@ -37,7 +37,7 @@ module.exports = async function handler(req, res) {
     // 1. Dispatch VIP Embed to Discord
     if (DISCORD_WEBHOOK_URL) {
       const discordPayload = {
-        username: "Northex Audit Desk",
+        username: "Northex Growth Audit",
         avatar_url: "https://raw.githubusercontent.com/Zcross091/agency-backup/main/favicon.png",
         embeds: [
           {
