@@ -330,7 +330,7 @@ h1, h2, h3, .brand-name {
 
 /* Hero Section */
 .hero-section {
-  padding: 100px 0 70px;
+  padding: 90px 0 80px;
   position: relative;
   z-index: 1;
 }
@@ -339,41 +339,62 @@ h1, h2, h3, .brand-name {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
 }
 
-.hero-title {
-  font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+/* Primary Split Grid: Headline on Left, Stacked Blocks on Right */
+.hero-split-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 52px;
+  width: 100%;
+  margin-bottom: 64px;
+}
+
+.hero-title-col {
+  text-align: left;
+}
+
+.hero-title-col .hero-title {
+  font-size: clamp(2.5rem, 5.2vw, 4.3rem);
   line-height: 1.1;
-  max-width: 960px;
-  margin-bottom: 24px;
+  max-width: 100%;
+  margin-bottom: 0;
+  text-align: left;
 }
 
-.hero-subtext {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  color: var(--text-muted);
-  max-width: 780px;
-  margin-bottom: 40px;
-  line-height: 1.65;
-}
-
-.hero-metrics-strip {
+.hero-cards-col {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 40px;
+  justify-content: flex-end;
+  width: 100%;
 }
 
-.metric-pill {
+.hero-stacked-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 440px;
+}
+
+.hero-stacked-metrics .metric-pill {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 18px;
+  gap: 14px;
+  padding: 13px 20px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: var(--transition-smooth);
+  width: 100%;
+}
+
+.hero-stacked-metrics .metric-pill:hover {
+  transform: translateX(4px);
+  border-color: rgba(255, 211, 172, 0.35);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
 }
 
 .metric-icon {
@@ -392,21 +413,40 @@ h1, h2, h3, .brand-name {
 }
 
 .metric-val {
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   font-weight: 700;
   color: #FFFFFF;
 }
 
 .metric-label {
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   color: var(--text-dim);
 }
 
-.hero-cta-group {
+/* Secondary Scroll Area: Subtext, CTA Buttons & Platform Badges */
+.hero-scroll-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.hero-scroll-content .hero-subtext {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--text-muted);
+  max-width: 820px;
+  margin-bottom: 36px;
+  line-height: 1.65;
+  text-align: center;
+}
+
+.hero-scroll-content .hero-cta-group {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
-  margin-bottom: 50px;
+  margin-bottom: 48px;
 }
 
 .hero-trust-bar {
@@ -1904,25 +1944,29 @@ h1, h2, h3, .brand-name {
     padding: 36px 0 28px;
     min-height: auto;
   }
+  .hero-split-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-bottom: 24px;
+  }
+  .hero-title-col,
+  .hero-title-col .hero-title {
+    text-align: center;
+  }
   .hero-title {
     font-size: 1.95rem;
     line-height: 1.18;
-    margin-bottom: 12px;
+    margin-bottom: 0;
   }
-  .hero-subtext {
-    font-size: 0.88rem;
-    line-height: 1.45;
-    margin-bottom: 20px;
+  .hero-cards-col {
+    justify-content: center;
   }
-  .hero-metrics-strip {
-    display: flex;
-    flex-direction: column;
+  .hero-stacked-metrics {
+    max-width: 100%;
     gap: 8px;
-    width: 100%;
-    margin-bottom: 22px;
   }
-  .metric-pill {
-    padding: 8px 14px;
+  .hero-stacked-metrics .metric-pill {
+    padding: 9px 14px;
     gap: 10px;
     border-radius: var(--radius-sm);
     justify-content: flex-start;
@@ -1937,7 +1981,12 @@ h1, h2, h3, .brand-name {
   .metric-label {
     font-size: 0.72rem;
   }
-  .hero-cta-group {
+  .hero-scroll-content .hero-subtext {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    margin-bottom: 20px;
+  }
+  .hero-scroll-content .hero-cta-group {
     flex-direction: column;
     gap: 10px;
     width: 100%;
