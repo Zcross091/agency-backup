@@ -1879,6 +1879,21 @@ h1, h2, h3, .brand-name {
   .mobile-menu.open {
     display: block;
   }
+  .hero-split-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+  .hero-title-col,
+  .hero-title-col .hero-title {
+    text-align: center;
+  }
+  .hero-cards-col {
+    justify-content: center;
+  }
+  .hero-stacked-metrics {
+    max-width: 520px;
+  }
   .services-grid {
     grid-template-columns: 1fr;
   }
@@ -1954,7 +1969,7 @@ h1, h2, h3, .brand-name {
     text-align: center;
   }
   .hero-title {
-    font-size: 1.95rem;
+    font-size: clamp(1.8rem, 6.5vw, 2.1rem);
     line-height: 1.18;
     margin-bottom: 0;
   }
