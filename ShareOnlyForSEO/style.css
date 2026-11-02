@@ -369,19 +369,39 @@ h1, h2, h3, .brand-name {
   width: 100%;
 }
 
+.hero-cards-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+}
+
+/* Background Golden Line Art Vector Backdrop */
+.hero-lineart-backdrop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 118%;
+  height: 126%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+}
+
 .hero-stacked-metrics {
   display: flex;
   flex-direction: column;
   gap: 14px;
   width: 100%;
-  max-width: 440px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-stacked-metrics .metric-pill {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 13px 20px;
+  gap: 16px;
+  padding: 12px 18px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
@@ -393,34 +413,67 @@ h1, h2, h3, .brand-name {
 
 .hero-stacked-metrics .metric-pill:hover {
   transform: translateX(4px);
-  border-color: rgba(255, 211, 172, 0.35);
-  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 211, 172, 0.4);
+  box-shadow: 0 12px 32px -8px rgba(255, 211, 172, 0.18);
 }
 
-.metric-icon {
-  font-size: 1.2rem;
+/* Luxury Golden Line Art Badge */
+.golden-lineart-badge {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: radial-gradient(circle, rgba(255, 211, 172, 0.16) 0%, rgba(20, 15, 11, 0.85) 100%);
+  border: 1px solid rgba(255, 211, 172, 0.38);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent-cream);
   flex-shrink: 0;
+  box-shadow: 0 4px 18px -2px rgba(255, 211, 172, 0.25), inset 0 0 12px rgba(255, 211, 172, 0.12);
+  transition: var(--transition-smooth);
+}
+
+.hero-stacked-metrics .metric-pill:hover .golden-lineart-badge {
+  border-color: var(--accent-cream);
+  box-shadow: 0 0 24px 2px rgba(255, 211, 172, 0.45), inset 0 0 14px rgba(255, 211, 172, 0.2);
+  transform: scale(1.05);
+}
+
+.golden-svg {
+  display: block;
 }
 
 .metric-info {
   display: flex;
   flex-direction: column;
   text-align: left;
+  flex-grow: 1;
+}
+
+.metric-val-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
 }
 
 .metric-val {
-  font-size: 0.96rem;
+  font-size: 0.98rem;
   font-weight: 700;
   color: #FFFFFF;
+  letter-spacing: -0.01em;
 }
 
-.metric-label {
-  font-size: 0.76rem;
-  color: var(--text-dim);
+.pill-gold-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-cream);
+  background: rgba(255, 211, 172, 0.08);
+  border: 1px solid rgba(255, 211, 172, 0.22);
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 /* Secondary Scroll Area: Subtext, CTA Buttons & Platform Badges */
@@ -612,6 +665,89 @@ h1, h2, h3, .brand-name {
   border: 1px solid rgba(255, 211, 172, 0.16);
   color: var(--accent-cream);
   margin: 0 auto 10px;
+}
+
+/* About Northex & Our Approach Section */
+.about-manifesto-card {
+  background: linear-gradient(180deg, rgba(26, 20, 15, 0.95) 0%, rgba(19, 14, 10, 0.88) 100%);
+  border: 1px solid rgba(255, 211, 172, 0.22);
+  border-radius: var(--radius-xl);
+  padding: 38px 40px;
+  margin-bottom: 32px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.7);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-manifesto-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-cream), transparent);
+}
+
+.about-manifesto-header {
+  margin-bottom: 20px;
+}
+
+.about-manifesto-title {
+  font-size: clamp(1.4rem, 2.6vw, 1.95rem);
+  line-height: 1.25;
+  margin-top: 10px;
+  margin-bottom: 14px;
+}
+
+.about-manifesto-text {
+  font-size: 0.96rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 980px;
+  margin-bottom: 28px;
+}
+
+.about-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 211, 172, 0.12);
+}
+
+.about-pillar-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.about-pillar-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: radial-gradient(circle, rgba(255, 211, 172, 0.14) 0%, rgba(26, 20, 15, 0.9) 100%);
+  border: 1px solid rgba(255, 211, 172, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--accent-cream);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.about-pillar-content h4 {
+  font-size: 0.96rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #FFFFFF;
+}
+
+.about-pillar-content p {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
 /* Approach & Deliverables Section */
@@ -1980,21 +2116,48 @@ h1, h2, h3, .brand-name {
     max-width: 100%;
     gap: 8px;
   }
+  .hero-lineart-backdrop {
+    display: none;
+  }
   .hero-stacked-metrics .metric-pill {
-    padding: 9px 14px;
-    gap: 10px;
-    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    gap: 12px;
+    border-radius: var(--radius-md);
     justify-content: flex-start;
   }
-  .metric-icon svg {
-    width: 16px;
-    height: 16px;
+  .golden-lineart-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+  .golden-lineart-badge svg {
+    width: 22px;
+    height: 22px;
   }
   .metric-val {
-    font-size: 0.88rem;
+    font-size: 0.9rem;
   }
-  .metric-label {
-    font-size: 0.72rem;
+  .pill-gold-tag {
+    font-size: 0.66rem;
+    padding: 2px 7px;
+  }
+  .about-manifesto-card {
+    padding: 22px 18px;
+    margin-bottom: 24px;
+    border-radius: var(--radius-lg);
+  }
+  .about-manifesto-title {
+    font-size: 1.35rem;
+  }
+  .about-manifesto-text {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+  .about-pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding-top: 18px;
   }
   .hero-scroll-content .hero-subtext {
     font-size: 0.88rem;
