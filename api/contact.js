@@ -26,7 +26,7 @@ module.exports = async function handler(req, res) {
     const contact = (data.contact || data.phone || "").trim();
     const email = (data.email || "").trim();
     const business = (data.business || "").trim();
-    const country = (data.country || "India").trim();
+    const country = (data.country || "Not Specified").trim();
     const needs = (data.needs || "").trim();
 
     const cleanDigits = contact.replace(/[^0-9+]/g, "");

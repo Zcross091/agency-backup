@@ -76,7 +76,7 @@ const server = http.createServer(async (req, res) => {
         const contact = data.contact || data.phone || "";
         const email = data.email;
         const business = data.business || "";
-        const country = data.country || "India";
+        const country = data.country || "Not Specified";
         const needs = data.needs || "";
 
         if (!name || !contact || !email) {
@@ -114,7 +114,7 @@ const server = http.createServer(async (req, res) => {
           cleanField(contact),
           cleanField(email),
           cleanField(business || "N/A"),
-          cleanField(country || "India"),
+          cleanField(country || "Not Specified"),
           cleanField(needs || "")
         ].join(",") + "\n";
 
@@ -172,7 +172,7 @@ const server = http.createServer(async (req, res) => {
                   </tr>
                   <tr>
                     <td style="padding: 12px 18px; font-size: 13px; color: #64748B; font-weight: bold;">Country</td>
-                    <td style="padding: 12px 18px; font-size: 14px; color: #CBD5E1;">${country || "India"}</td>
+                    <td style="padding: 12px 18px; font-size: 14px; color: #CBD5E1;">${country || "Not Specified"}</td>
                   </tr>
                 </table>
 
@@ -248,7 +248,7 @@ const server = http.createServer(async (req, res) => {
         const email = (data.email || "").trim();
         const business = (data.business || "").trim();
         const address = (data.address || "").trim();
-        const country = (data.country || "India").trim();
+        const country = (data.country || "Not Specified").trim();
         const requestedAuditDate = (data.requestedAuditDate || "").trim();
         const requestedAuditDateFormatted = (data.requestedAuditDateFormatted || requestedAuditDate).trim();
         const notes = (data.notes || "").trim();
@@ -302,7 +302,7 @@ const server = http.createServer(async (req, res) => {
           cleanField(email),
           cleanField(business || "N/A"),
           cleanField(address || "N/A"),
-          cleanField(country || "India"),
+          cleanField(country || "Not Specified"),
           cleanField(requestedAuditDateFormatted || requestedAuditDate),
           cleanField(notes || "")
         ].join(",") + "\n";
@@ -369,7 +369,7 @@ const server = http.createServer(async (req, res) => {
                   </tr>
                   <tr>
                     <td style="padding: 12px 18px; font-size: 13px; color: #8E7E70; font-weight: bold;">Country</td>
-                    <td style="padding: 12px 18px; font-size: 14px; color: #CBBDB0;">${country || "India"}</td>
+                    <td style="padding: 12px 18px; font-size: 14px; color: #CBBDB0;">${country || "Not Specified"}</td>
                   </tr>
                 </table>
 
@@ -525,7 +525,7 @@ async function dispatchToDiscord(lead) {
     const name = lead.name || "Valued Client";
     const business = lead.business || "N/A";
     const email = lead.email || "N/A";
-    const country = lead.country || "India";
+    const country = lead.country || "Not Specified";
     const needs = lead.needs || "No additional comments provided.";
 
     const discordPayload = {
@@ -603,7 +603,7 @@ async function dispatchAuditBookingToDiscord(lead) {
     const business = lead.business || "N/A";
     const email = lead.email || "N/A";
     const address = lead.address || "N/A";
-    const country = lead.country || "India";
+    const country = lead.country || "Not Specified";
     const dateStr = lead.requestedAuditDateFormatted || lead.requestedAuditDate || "Unspecified";
     const notes = lead.notes || "No additional comments provided.";
 
