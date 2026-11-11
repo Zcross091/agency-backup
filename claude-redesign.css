@@ -440,11 +440,14 @@ section {
 .snode span {
   font-size: 10.5px;
   color: var(--g1);
-  background: rgba(13, 11, 9, 0.85);
+  background: rgba(13, 11, 9, 0.95);
   padding: 2px 7px;
   border-radius: 999px;
   border: 1px solid var(--line);
   white-space: nowrap;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 /* Slider Controls */
