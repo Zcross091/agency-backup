@@ -85,6 +85,61 @@ a.btn.sec, a.btn.sec:visited, a.btn-outline, a.btn-outline:visited {
   color: var(--txt) !important;
 }
 
+/* Sections & Structural Spacing */
+section {
+  padding: 100px 0;
+  position: relative;
+  box-sizing: border-box;
+}
+
+#services {
+  padding: 100px 0 110px;
+}
+
+#approach {
+  background: var(--bg2);
+  border-top: 1px solid rgba(217, 169, 119, 0.12);
+  border-bottom: 1px solid rgba(217, 169, 119, 0.12);
+  padding: 110px 0;
+}
+
+#audit {
+  padding: 110px 0;
+}
+
+#process {
+  background: var(--bg2);
+  border-top: 1px solid rgba(217, 169, 119, 0.12);
+  border-bottom: 1px solid rgba(217, 169, 119, 0.12);
+  padding: 110px 0;
+}
+
+#founders {
+  padding: 110px 0;
+}
+
+#faq {
+  padding: 90px 0 110px;
+}
+
+#contact {
+  background: var(--bg2);
+  border-top: 1px solid rgba(217, 169, 119, 0.12);
+  padding: 110px 0 120px;
+}
+
+@media (max-width: 768px) {
+  section,
+  #services,
+  #approach,
+  #audit,
+  #process,
+  #founders,
+  #faq,
+  #contact {
+    padding: 60px 0 !important;
+  }
+}
 
 .wrap {
   max-width: 1160px;
