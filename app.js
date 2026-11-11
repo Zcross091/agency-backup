@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initSmoothScroll();
   initFaqAccordion();
   initLegalTabs();
+  initHeroSlider();
 });
 
 /* --------------------------------------------------------------------------
@@ -277,3 +278,47 @@ function initLegalTabs() {
   window.addEventListener("hashchange", checkHash);
   checkHash();
 }
+
+/* --------------------------------------------------------------------------
+   7. Hero Carousel & Compass Needle Slider
+   -------------------------------------------------------------------------- */
+function initHeroSlider() {
+  const slides = document.querySelectorAll(".slide, .slider-slide");
+  const dots = document.querySelectorAll(".dt, .s-dot");
+  const pv = document.getElementById("pv");
+  const nx = document.getElementById("nx");
+  const box = document.querySelector(".slider, .slider-wrapper");
+  if (!slides.length) return;
+  let idx = 0;
+  let timer;
+
+  function goTo(n) {
+    idx = (n + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle("on", i === idx));
+    dots.forEach((d, i) => d.classList.toggle("on", i === idx));
+  }
+
+  function start() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    clearInterval(timer);
+    timer = setInterval(() => goTo(idx + 1), 7000);
+  }
+
+  function stop() {
+    clearInterval(timer);
+  }
+
+  if (pv) pv.addEventListener("click", () => { goTo(idx - 1); start(); });
+  if (nx) nx.addEventListener("click", () => { goTo(idx + 1); start(); });
+  dots.forEach((d, i) => d.addEventListener("click", () => { goTo(i); start(); }));
+
+  if (box) {
+    box.addEventListener("mouseenter", stop);
+    box.addEventListener("mouseleave", start);
+    box.addEventListener("focusin", stop);
+    box.addEventListener("focusout", start);
+  }
+
+  start();
+}
+

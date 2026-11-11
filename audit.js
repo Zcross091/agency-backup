@@ -399,4 +399,21 @@ function showSuccessState(dateFormatted) {
     successCard.style.display = "block";
     successCard.scrollIntoView({ behavior: "smooth", block: "center" });
   }
+
+  // Conversion Tracking Trigger: Push #thank-you to URL and fire GTM & Meta events
+  try {
+    if (window.location.hash !== "#thank-you") {
+      history.pushState(null, "", "#thank-you");
+    }
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "audit_submission_success",
+      page_path: "/audit#thank-you"
+    });
+    if (typeof fbq === "function") {
+      fbq("track", "Lead");
+    }
+  } catch (trackErr) {
+    console.debug("[Analytics] Tag dispatch note:", trackErr);
+  }
 }

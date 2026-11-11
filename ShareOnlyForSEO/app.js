@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initSmoothScroll();
   initFaqAccordion();
   initLegalTabs();
+  initHeroSlider();
 });
 
 /* --------------------------------------------------------------------------
@@ -51,8 +52,6 @@ function initModalHandling() {
     modal.classList.remove("open");
   }
 
-  if (openAuditBtnNav) openAuditBtnNav.addEventListener("click", openModal);
-  if (openAuditBtnTeam) openAuditBtnTeam.addEventListener("click", openModal);
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
 
   modal.addEventListener("click", (e) => {
@@ -135,23 +134,10 @@ function initContactForm() {
 
     const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbzhJQw61YLOYHF2nhqavqA4xMyW9ZinlqhTOX7_njxfuOhJ4z0_cgFjGWTf1yWW-IvEyA/exec";
 
-    // 1. Direct Webhook Dispatch (Ensures delivery on Live Server, Vercel, or localhost)
-    if (GOOGLE_SHEET_WEBHOOK) {
-      try {
-        // Send clean phone data — Apps Script handles text formatting via setNumberFormat('@')
-        fetch(GOOGLE_SHEET_WEBHOOK, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain" },
-          body: JSON.stringify(payload)
-        }).catch(err => console.warn("Google Sheet direct post note:", err));
-      } catch (err) {
-        console.warn("Direct webhook dispatch:", err);
-      }
-    }
+    let apiSucceeded = false;
 
+    // 1. Primary Dispatch: Dispatch to API (/api/contact) which handles single-point archiving and sync
     try {
-      // 2. Dispatch to local Node server API (/api/contact) for Vault archiving & server-side email
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -159,22 +145,36 @@ function initContactForm() {
       });
 
       if (res.ok) {
+        apiSucceeded = true;
         showSuccessMessage(payload.name, payload.business);
         form.reset();
-      } else {
-        throw new Error("Server responded with status " + res.status);
       }
     } catch (err) {
-      console.log("Local server API note:", err.message);
-      // Even if local server is not active (e.g. running on Vercel or Live Server), webhook already received lead
-      saveLeadOffline(payload);
-      showSuccessMessage(payload.name, payload.business);
-      form.reset();
-    } finally {
-      submitBtn.disabled = false;
-      submitBtnText.style.display = "inline";
-      submitSpinner.style.display = "none";
+      console.log("[Northex Lead Engine] Primary API note:", err.message);
     }
+
+    // 2. Fail-Safe Fallback: Only call Google Sheets directly if the primary API was completely unreachable
+    if (!apiSucceeded && GOOGLE_SHEET_WEBHOOK) {
+      try {
+        await fetch(GOOGLE_SHEET_WEBHOOK, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify(payload)
+        });
+        showSuccessMessage(payload.name, payload.business);
+        form.reset();
+      } catch (fallbackErr) {
+        console.warn("[Northex Lead Engine] Fallback webhook note:", fallbackErr);
+        saveLeadOffline(payload);
+        showSuccessMessage(payload.name, payload.business);
+        form.reset();
+      }
+    }
+
+    submitBtn.disabled = false;
+    submitBtnText.style.display = "inline";
+    submitSpinner.style.display = "none";
   });
 
   function showSuccessMessage(name, business) {
@@ -202,7 +202,6 @@ function initContactForm() {
 function initSmoothScroll() {
   const contactTriggers = [
     document.getElementById("openContactBtnNav"),
-    document.getElementById("openContactBtnHero"),
     document.getElementById("openContactBtnCalc"),
     document.getElementById("openContactBtnMobile")
   ];
@@ -279,3 +278,47 @@ function initLegalTabs() {
   window.addEventListener("hashchange", checkHash);
   checkHash();
 }
+
+/* --------------------------------------------------------------------------
+   7. Hero Carousel & Compass Needle Slider
+   -------------------------------------------------------------------------- */
+function initHeroSlider() {
+  const slides = document.querySelectorAll(".slide, .slider-slide");
+  const dots = document.querySelectorAll(".dt, .s-dot");
+  const pv = document.getElementById("pv");
+  const nx = document.getElementById("nx");
+  const box = document.querySelector(".slider, .slider-wrapper");
+  if (!slides.length) return;
+  let idx = 0;
+  let timer;
+
+  function goTo(n) {
+    idx = (n + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle("on", i === idx));
+    dots.forEach((d, i) => d.classList.toggle("on", i === idx));
+  }
+
+  function start() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    clearInterval(timer);
+    timer = setInterval(() => goTo(idx + 1), 7000);
+  }
+
+  function stop() {
+    clearInterval(timer);
+  }
+
+  if (pv) pv.addEventListener("click", () => { goTo(idx - 1); start(); });
+  if (nx) nx.addEventListener("click", () => { goTo(idx + 1); start(); });
+  dots.forEach((d, i) => d.addEventListener("click", () => { goTo(i); start(); }));
+
+  if (box) {
+    box.addEventListener("mouseenter", stop);
+    box.addEventListener("mouseleave", start);
+    box.addEventListener("focusin", stop);
+    box.addEventListener("focusout", start);
+  }
+
+  start();
+}
+

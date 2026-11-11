@@ -2,6 +2,7 @@
    NORTHEX DESIGN SYSTEM & STYLESHEET
    Aesthetics: Luxury Obsidian Espresso & Warm Cream (#FFD3AC)
    ========================================================================== */
+@import url('claude-redesign.css');
 
 :root {
   --bg-main: #0B0806;
