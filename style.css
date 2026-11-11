@@ -270,7 +270,7 @@ h1, h2, h3, .brand-name {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 18px;
 }
 
 .nav-links a {
