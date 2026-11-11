@@ -815,16 +815,74 @@
         </div>
 
         <!-- Lead Intake Form (Preserving all production backend integrations) -->
+                <!-- Lead Intake Form (Preserving all production backend integrations) -->
         <form id="leadIntakeForm" class="fcard">
           <div class="r">
-            <input type="text" id="clientName" name="name" placeholder="Full name" required>
-            <input type="text" id="clientBusiness" name="business" placeholder="Business name" required>
+            <input type="text" id="clientName" name="name" placeholder="Full name *" required>
+            <input type="text" id="clientBusiness" name="business" placeholder="Business name *" required>
           </div>
           <div class="r">
-            <input type="email" id="clientEmail" name="email" placeholder="Email" required>
-            <input type="text" id="clientCountry" name="country" placeholder="Country" required>
+            <input type="email" id="clientEmail" name="email" placeholder="Email address *" required>
+            <select id="clientCountry" name="country" class="country-select" required>
+                  <option value="" disabled selected>Select your country</option>
+                  <option value="India">India</option>
+                  <option value="United States">United States</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="United Arab Emirates">United Arab Emirates</option>
+                  <option value="Australia">Australia</option>
+                  <option value="Canada">Canada</option>
+                  <option value="Germany">Germany</option>
+                  <option value="France">France</option>
+                  <option value="Singapore">Singapore</option>
+                  <option value="Netherlands">Netherlands</option>
+                  <option value="Ireland">Ireland</option>
+                  <option value="New Zealand">New Zealand</option>
+                  <option value="Spain">Spain</option>
+                  <option value="Italy">Italy</option>
+                  <option value="Sweden">Sweden</option>
+                  <option value="Switzerland">Switzerland</option>
+                  <option value="Norway">Norway</option>
+                  <option value="Saudi Arabia">Saudi Arabia</option>
+                  <option value="Qatar">Qatar</option>
+                  <option value="Kuwait">Kuwait</option>
+                  <option value="Bahrain">Bahrain</option>
+                  <option value="Oman">Oman</option>
+                  <option value="South Africa">South Africa</option>
+                  <option value="Other">Other Country</option>
+                </select>
           </div>
-          <textarea id="clientNeeds" name="needs" rows="3" placeholder="What do you sell &amp; what's your main challenge?" required></textarea>
+          <div class="r" style="margin-bottom: 12px;">
+            <div class="phone-input-group" style="grid-column: 1 / -1;">
+              <select id="phoneCountryCode" name="countryCode" class="country-code-select" required aria-label="Country Code">
+                    <option value="" disabled selected>Code</option>
+                    <option value="+91" data-country="India">+91 (IN)</option>
+                    <option value="+1" data-country="United States">+1 (US)</option>
+                    <option value="+44" data-country="United Kingdom">+44 (UK)</option>
+                    <option value="+971" data-country="United Arab Emirates">+971 (AE)</option>
+                    <option value="+61" data-country="Australia">+61 (AU)</option>
+                    <option value="+1" data-country="Canada">+1 (CA)</option>
+                    <option value="+49" data-country="Germany">+49 (DE)</option>
+                    <option value="+33" data-country="France">+33 (FR)</option>
+                    <option value="+65" data-country="Singapore">+65 (SG)</option>
+                    <option value="+31" data-country="Netherlands">+31 (NL)</option>
+                    <option value="+353" data-country="Ireland">+353 (IE)</option>
+                    <option value="+64" data-country="New Zealand">+64 (NZ)</option>
+                    <option value="+34" data-country="Spain">+34 (ES)</option>
+                    <option value="+39" data-country="Italy">+39 (IT)</option>
+                    <option value="+46" data-country="Sweden">+46 (SE)</option>
+                    <option value="+41" data-country="Switzerland">+41 (CH)</option>
+                    <option value="+47" data-country="Norway">+47 (NO)</option>
+                    <option value="+966" data-country="Saudi Arabia">+966 (SA)</option>
+                    <option value="+974" data-country="Qatar">+974 (QA)</option>
+                    <option value="+965" data-country="Kuwait">+965 (KW)</option>
+                    <option value="+973" data-country="Bahrain">+973 (BH)</option>
+                    <option value="+968" data-country="Oman">+968 (OM)</option>
+                    <option value="+27" data-country="South Africa">+27 (ZA)</option>
+                  </select>
+              <input type="tel" id="clientContact" name="contact" placeholder="Phone / WhatsApp (For strategy call) *" required>
+            </div>
+          </div>
+          <textarea id="clientNeeds" name="needs" rows="3" placeholder="What do you sell &amp; what's your main challenge? *" required></textarea>
 
           <div class="form-status" id="formStatus" style="display:none;margin-bottom:12px;"></div>
 
