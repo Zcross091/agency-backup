@@ -147,7 +147,7 @@ function initContactForm() {
     statusBox.className = "form-status";
     statusBox.style.display = "none";
 
-    const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbzhJQw61YLOYHF2nhqavqA4xMyW9ZinlqhTOX7_njxfuOhJ4z0_cgFjGWTf1yWW-IvEyA/exec";
+    const GOOGLE_SHEET_WEBHOOK = "https://script.google.com/macros/s/AKfycbxuncPwTrc1_oF4mcEoAU3xGASCnbk2G07--Uq10GNolbNxVKb-PWCFtaQSL2vs_--N4w/exec";
 
     let apiSucceeded = false;
 
