@@ -305,7 +305,8 @@ function initHeroSlider() {
   const box = document.querySelector(".slider, .slider-wrapper");
   if (!slides.length) return;
   let idx = 0;
-  let timer;
+  let timer = null;
+  const SLIDE_INTERVAL = 6000; // 6 seconds per slide
 
   function goTo(n) {
     idx = (n + slides.length) % slides.length;
@@ -314,25 +315,55 @@ function initHeroSlider() {
   }
 
   function start() {
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     clearInterval(timer);
-    timer = setInterval(() => goTo(idx + 1), 7000);
+    timer = setInterval(() => {
+      goTo(idx + 1);
+    }, SLIDE_INTERVAL);
   }
 
   function stop() {
     clearInterval(timer);
   }
 
-  if (pv) pv.addEventListener("click", () => { goTo(idx - 1); start(); });
-  if (nx) nx.addEventListener("click", () => { goTo(idx + 1); start(); });
-  dots.forEach((d, i) => d.addEventListener("click", () => { goTo(i); start(); }));
+  if (pv) {
+    pv.addEventListener("click", (e) => {
+      e.stopPropagation();
+      goTo(idx - 1);
+      start();
+    });
+  }
+
+  if (nx) {
+    nx.addEventListener("click", (e) => {
+      e.stopPropagation();
+      goTo(idx + 1);
+      start();
+    });
+  }
+
+  dots.forEach((d, i) => {
+    d.addEventListener("click", (e) => {
+      e.stopPropagation();
+      goTo(i);
+      start();
+    });
+  });
 
   if (box) {
     box.addEventListener("mouseenter", stop);
     box.addEventListener("mouseleave", start);
-    box.addEventListener("focusin", stop);
-    box.addEventListener("focusout", start);
+    box.addEventListener("touchend", () => {
+      setTimeout(start, 2000);
+    });
   }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stop();
+    } else {
+      start();
+    }
+  });
 
   start();
 }
