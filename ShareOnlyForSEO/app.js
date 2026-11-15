@@ -114,6 +114,10 @@ function initContactForm() {
     let rawContact = (formData.get("contact") || "").trim();
     const fullContact = rawContact.startsWith("+") ? rawContact : (countryCode ? `${countryCode} ${rawContact}` : rawContact);
 
+    const attribution = (window.NorthexTracker && typeof window.NorthexTracker.getAttribution === "function") 
+      ? window.NorthexTracker.getAttribution() 
+      : {};
+
     const payload = {
       name: formData.get("name"),
       contact: fullContact,
@@ -122,7 +126,18 @@ function initContactForm() {
       business: formData.get("business"),
       country: formData.get("country") || "",
       needs: formData.get("needs"),
-      submittedAt: new Date().toISOString()
+      submittedAt: new Date().toISOString(),
+      attribution: attribution,
+      utm_source: attribution.utmSource || "direct",
+      utm_medium: attribution.utmMedium || "direct",
+      utm_campaign: attribution.utmCampaign || "none",
+      ad_click_id: attribution.adClickId || "",
+      ad_platform: attribution.adPlatform || "Direct",
+      device_type: attribution.deviceType || "Desktop",
+      os: attribution.os || "Unknown",
+      visitor_id: attribution.visitorId || "",
+      visit_count: attribution.visitCount || 1,
+      timezone: attribution.timezone || ""
     };
 
     // UI Loading State

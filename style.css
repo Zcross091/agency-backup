@@ -3419,3 +3419,125 @@ h1, h2, h3, .brand-name {
   }
 }
 
+
+
+/* --------------------------------------------------------------------------
+   Northex Cookie & Performance Consent Banner (Luxury Acrylic Pill)
+   -------------------------------------------------------------------------- */
+.nx-cookie-banner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  max-width: 420px;
+  z-index: 99999;
+  background: rgba(18, 14, 11, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(217, 169, 119, 0.32);
+  border-radius: 18px;
+  padding: 20px 22px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(217, 169, 119, 0.1);
+  color: #f7f3ee;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  animation: nxBannerSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+@keyframes nxBannerSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.nx-cookie-banner.nx-cookie-hidden {
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+  pointer-events: none;
+}
+
+.nx-cookie-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.nx-cookie-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d9a977;
+  margin-bottom: 8px;
+}
+
+.nx-cookie-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #39e58c;
+  box-shadow: 0 0 10px #39e58c;
+}
+
+.nx-cookie-body h4 {
+  margin: 0 0 6px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.nx-cookie-body p {
+  margin: 0 0 16px 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #a89f91;
+}
+
+.nx-cookie-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.nx-cookie-actions .btn {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  text-align: center;
+  justify-content: center;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nx-cookie-actions .nx-cookie-btn-accept {
+  background: linear-gradient(135deg, #d9a977 0%, #a8794c 100%);
+  color: #120e0b;
+  border: none;
+  box-shadow: 0 4px 14px rgba(217, 169, 119, 0.35);
+}
+
+.nx-cookie-actions .nx-cookie-btn-decline {
+  background: rgba(255, 255, 255, 0.04);
+  color: #fbe9d0;
+  border: 1px solid rgba(217, 169, 119, 0.3);
+}
+
+@media (max-width: 600px) {
+  .nx-cookie-banner {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    max-width: none;
+    padding: 18px 18px;
+  }
+}

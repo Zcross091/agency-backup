@@ -32,6 +32,18 @@ module.exports = async function handler(req, res) {
     const requestedAuditDateFormatted = (data.requestedAuditDateFormatted || requestedAuditDate).trim();
     const notes = (data.notes || "").trim();
 
+    const attr = data.attribution || {};
+    const utmSource = data.utm_source || attr.utmSource || "direct";
+    const utmMedium = data.utm_medium || attr.utmMedium || "";
+    const utmCampaign = data.utm_campaign || attr.utmCampaign || "none";
+    const adClickId = data.ad_click_id || attr.adClickId || "";
+    const adPlatform = data.ad_platform || attr.adPlatform || "Direct";
+    const deviceType = data.device_type || attr.deviceType || "Desktop";
+    const os = data.os || attr.os || "Unknown";
+    const visitCount = data.visit_count || attr.visitCount || 1;
+    const timezone = data.timezone || attr.timezone || "N/A";
+    const visitorId = data.visitor_id || attr.visitorId || "";
+
     const cleanDigits = contact.replace(/[^0-9+]/g, "");
 
     // 1. Dispatch VIP Embed to Discord
@@ -53,6 +65,17 @@ module.exports = async function handler(req, res) {
               { name: "📞 Phone / WhatsApp", value: contact ? `[\`${contact}\`](tel:${cleanDigits})` : "*Not provided*", inline: true },
               { name: "✉️ Email Address", value: email ? `[${email}](mailto:${email})` : "*Not provided*", inline: true },
               { name: "⏰ Submitted At", value: `<t:${Math.floor(Date.now() / 1000)}:R>`, inline: true },
+              {
+                name: "🎯 Marketing Attribution & Device Intelligence",
+                value: [
+                  `• **Device / Platform:** ${deviceType} (${os})`,
+                  `• **Acquisition Source:** ${utmSource} ${utmMedium ? `(${utmMedium})` : ""} • Campaign: \`${utmCampaign}\``,
+                  adClickId ? `• **Ad Click ID (${adPlatform}):** \`${adClickId.slice(0, 32)}...\`` : null,
+                  `• **Visitor Journey:** Visit #${visitCount} • Timezone: \`${timezone}\``,
+                  visitorId ? `• **Visitor ID:** \`${visitorId.slice(0, 24)}...\`` : null
+                ].filter(Boolean).join("\n"),
+                inline: false
+              },
               { name: "🎯 Goals & Growth Notes", value: `\`\`\`fix\n${(notes || "None specified").slice(0, 1000)}\n\`\`\``, inline: false },
               { name: "⚡ Action Required", value: `Reach out to client via WhatsApp/Email to schedule the consultation time on **${requestedAuditDateFormatted || requestedAuditDate}**.`, inline: false }
             ],
